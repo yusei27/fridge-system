@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # fridge-system
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -44,3 +45,6 @@ npm run build
 ```sh
 npm run test:unit
 ```
+=======
+# fridge-system
+>>>>>>> origin/main
