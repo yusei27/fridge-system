@@ -5,9 +5,16 @@ import Login from './views/Login/LoginView.vue'
 </script>
 
 <template>
-  <RouterLink v-bind:to="{name: 'Login'}"></RouterLink>
-  <RouterView ></RouterView>
-  <h3>あ</h3>
+  <v-app>
+    <!-- ヘッダーここから-->
+    <v-app-bar color="primary">
+      冷蔵庫ちゃん
+    </v-app-bar>
+    <!-- ヘッダーここまで-->
+    <v-main>
+      <RouterView ></RouterView>
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped>
