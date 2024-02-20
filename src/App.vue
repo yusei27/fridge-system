@@ -14,6 +14,9 @@ import Login from './views/Login/LoginView.vue'
     <v-main>
       <RouterView ></RouterView>
     </v-main>
+    <v-footer color="primary">
+      Footer
+    </v-footer>
   </v-app>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-card>
+        <v-card min-width="300">
             <v-text-field type="email"></v-text-field>
             <v-text-field type="password"></v-text-field>
             <RouterLink v-bind:to="{name: 'Main'}" tag="v-btn">
