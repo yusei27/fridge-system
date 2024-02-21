@@ -15,6 +15,3 @@
     </v-container>
 </template>
 
-<script setup lang="ts">
-    const LoginViewFlag = false;
-</script>
