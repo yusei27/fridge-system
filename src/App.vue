@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import Login from './views/Login/LoginView.vue'
+import {computed} from "vue";
+import { RouterLink, RouterView } from 'vue-router';
+import HelloWorld from './components/HelloWorld.vue';
+import Login from './views/Login/LoginView.vue';
 
-const LoginViewFlag: boolean = false;
+//ログインしたユーザーのデータストア
+import { useLoginUserStore } from '@/stores/loginuser';
+const loginUserStore = useLoginUserStore();
+const loginFlag = computed(
+  ():boolean => {
+    return loginUserStore.loginFlag;
+  }
+);
 </script>
 
 <template>
@@ -11,9 +19,11 @@ const LoginViewFlag: boolean = false;
     <!-- ヘッダーここから-->
     <v-app-bar color="primary">
       <v-app-bar-title>冷蔵庫ちゃん</v-app-bar-title>
-      <template v-slot:append v-if="LoginViewFlag">
-        <v-btn class="app-bar-button">買い物リスト</v-btn>
-        <v-btn class="app-bar-button">レシピ一覧</v-btn>
+      <template v-slot:append v-if="loginFlag">
+        <RouterLink v-bind:to="{name: 'ShoppingList'}" tag="v-btn">
+          <v-btn class="app-bar-button">買い物リスト</v-btn>
+        </RouterLink>
+          <v-btn class="app-bar-button">レシピ一覧</v-btn>
         <v-btn class="app-bar-button">アカウント</v-btn>
       </template>
     </v-app-bar>

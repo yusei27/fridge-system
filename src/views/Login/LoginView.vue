@@ -5,7 +5,7 @@
             <v-text-field type="password"></v-text-field>
             <RouterLink v-bind:to="{name: 'Main'}" tag="v-btn">
                 <v-col>
-                    <v-btn>ログイン</v-btn>
+                    <v-btn v-on:click="onLoginButtonClick">ログイン</v-btn>
                 </v-col>
             </RouterLink>
             <v-col>
@@ -15,3 +15,13 @@
     </v-container>
 </template>
 
+
+<script setup lang="ts">
+import { useLoginUserStore } from '@/stores/loginuser';
+const LoginUserStore = useLoginUserStore();
+
+
+const onLoginButtonClick = () => {
+    LoginUserStore.loginSuccess();
+}
+</script>

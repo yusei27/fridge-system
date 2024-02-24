@@ -1,5 +1,6 @@
 <template>
     <v-container>
+        <v-checkbox label="Checkbox"></v-checkbox>
         <h2>今日のおすすめ</h2>
         <h3>肉じゃが</h3>
         <v-img src="/src/assets/images/29029806_s.jpg"></v-img>

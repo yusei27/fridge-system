@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
 
+interface State {
+    loginFlag: boolean;
+}
+
 export const useLoginUserStore = defineStore({
     id: 'loginuser',
     state: (): State => {
@@ -8,9 +12,9 @@ export const useLoginUserStore = defineStore({
         };
     },
     actions: {
-        loginSuccess: (): void => {
+        loginSuccess(): void {
             this.loginFlag = true;
-            
-        };
+            console.log("ログイン関数実行", this.loginFlag);
+        }
     },
-})
+});
