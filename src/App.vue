@@ -23,7 +23,9 @@ const loginFlag = computed(
         <RouterLink v-bind:to="{name: 'ShoppingList'}" tag="v-btn">
           <v-btn class="app-bar-button">買い物リスト</v-btn>
         </RouterLink>
+        <RouterLink v-bind:to="{name: 'RecipeList'}" tag="v-btn">
           <v-btn class="app-bar-button">レシピ一覧</v-btn>
+        </RouterLink>
         <v-btn class="app-bar-button">アカウント</v-btn>
       </template>
     </v-app-bar>
