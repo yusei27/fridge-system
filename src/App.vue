@@ -26,7 +26,30 @@ const loginFlag = computed(
         <RouterLink v-bind:to="{name: 'RecipeList'}" tag="v-btn">
           <v-btn class="app-bar-button">レシピ一覧</v-btn>
         </RouterLink>
-        <v-btn class="app-bar-button">アカウント</v-btn>
+        <v-menu>
+          <template v-slot:activator="{ props }">
+            <v-btn
+              class="app-bar-account"
+              v-bind="props"
+            >
+              アカウント
+            </v-btn>
+          </template>
+          <v-card>
+            <v-list>
+              <v-list-item
+                title="ドラえもん">
+              </v-list-item>
+              <v-list-item
+                title="doradora@fujio.com">
+              </v-list-item>
+              <v-list-item>
+                  <v-btn>詳細情報</v-btn>
+              </v-list-item>
+
+            </v-list>
+          </v-card>
+        </v-menu>
       </template>
     </v-app-bar>
     <!-- ヘッダーここまで-->
@@ -41,6 +64,12 @@ const loginFlag = computed(
 
 <style scoped>
 .app-bar-button{
+  color: #fff;
+  background: #eb6100;
+  font-weight: 2000;
+  margin: 3px;
+}
+.app-bar-account{
   color: #fff;
   background: #eb6100;
   font-weight: 2000;
