@@ -69,6 +69,4 @@
         buyedItemListInit.push(item);
         console.log("購入済みリスト", buyedItemListInit)
     }
-
-
 </script>

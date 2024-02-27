@@ -2,14 +2,16 @@
     <v-container>
         <v-card min-width="300">
             <v-text-field type="email"></v-text-field>
-            <v-text-field type="password"></v-text-field>
-            <RouterLink v-bind:to="{name: 'Main'}" tag="v-btn">
-                <v-col>
-                    <v-btn v-on:click="onLoginButtonClick">ログイン</v-btn>
-                </v-col>
-            </RouterLink>
+            <v-text-field type="password"></v-text-field>       
             <v-col>
-                <v-btn>新規会員登録</v-btn>
+                <RouterLink v-bind:to="{name: 'Main'}" tag="v-btn">
+                    <v-btn v-on:click="onLoginButtonClick">ログイン</v-btn>
+                </RouterLink>
+            </v-col>
+            <v-col>
+                <RouterLink v-bind:to="{name: 'UserRegister'}" tag="v-btn">
+                    <v-btn>新規会員登録</v-btn>
+                </RouterLink>
             </v-col>
         </v-card>
     </v-container>

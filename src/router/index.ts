@@ -6,7 +6,7 @@ import ShoppingListView from '../views/ShoppingList/ShoppingListView.vue';
 import RecipeListView from '../views/Recipe/RecipeList.vue';
 import RecipeRegister from '../views/Recipe/RecipeRegister.vue';
 import RecipeDetail from '../views/Recipe/RecipeDetail.vue';
-
+import UserRegister from '../views/Login/UserRegister.vue';
 const routeSetting: RouteRecordRaw[] = [
   {
     path: '/',
@@ -37,6 +37,11 @@ const routeSetting: RouteRecordRaw[] = [
     path: '/RecipeDetail',
     name: 'RecipeDetail',
     component: RecipeDetail
+  },
+  {
+    path: '/UserRegister',
+    name: 'UserRegister',
+    component: UserRegister
   }
 ];
 
