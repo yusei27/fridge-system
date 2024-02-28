@@ -5,45 +5,50 @@
     <v-form
         @submit.prevent="submit">
         <v-row>
-            <v-col><v-textarea
-                        ref="form"
-                        label="名前を入力"
-                        variant="outlined"
-                        rows="1">
-                    </v-textarea>
+            <v-col>
+                <v-text-field
+                    ref="form"
+                    label="名前を入力"
+                    variant="outlined"
+                    rows="1">
+                </v-text-field>
             </v-col>
         </v-row>
         <v-row>
-            <v-col><v-textarea
-                        v-model=email
-                        label="メールアドレスを入力"
-                        variant="outlined"
-                        :rules="[rules.email]"
-                        rows="1"
-                        type="email">
-                    </v-textarea>
+            <v-col>
+                <v-text-field
+                    v-model=email
+                    label="メールアドレスを入力"
+                    variant="outlined"
+                    :rules="[rules.email]"
+                    rows="1"
+                    type="email">
+                </v-text-field>
             </v-col>
         </v-row>
         <v-row>
-            <v-col><v-textarea
+            <v-col>
+                <v-text-field
                         v-model="password"
                         label="パスワードを入力"
                         variant="outlined"
                         :rules="[rules.password]"
                         rows="1"
                         type="password">
-                    </v-textarea>
+                </v-text-field>
             </v-col>
         </v-row>
         <v-row>
-            <v-col><v-textarea
+            <v-col>
+                <v-text-field
                         v-model="password_confirm"
                         label="パスワード（確認）を入力"
                         variant="outlined"
                         :rules="[rules.password, rules.passwordConfirm]"
                         rows="1"
+                        type="password"
                         >
-                    </v-textarea>
+                </v-text-field>
             </v-col>
         </v-row>
         <v-row>
