@@ -8,9 +8,19 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
+  server: {
+    proxy: {
+    '/register': {
+      target: 'http://localhost:5173/',
+      changeOrigin: true,
+      secure: false,
+      rewrite: path => path.replace('/register/user', ''),
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
 })

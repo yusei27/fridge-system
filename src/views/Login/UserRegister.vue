@@ -62,7 +62,8 @@
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';　
+    import { ref } from 'vue';
+    import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
     const form = ref();
     const email = ref();
     const password = ref();
@@ -90,7 +91,20 @@
         console.log("password_confirm", password_confirm.value);
         const results = events;
         alert(JSON.stringify(results, null, 2));
+
+
+    const options: AxiosRequestConfig = {
+        url: "http://localhost:3333//register/user",
+        method: "GET"
     };
+    axios.get("http://localhost:3333//register/user")
+        .then((res: AxiosResponse) => {
+            console.log("ユーザー登録API成功");
+        })
+        .catch((e: AxiosError<{error: string}>) => {
+            console.log("ユーザー登録API失敗");
+        })
+        };
 
 </script>
 
