@@ -7,7 +7,7 @@
         <v-row>
             <v-col>
                 <v-text-field
-                    ref="form"
+                    v-model="name"
                     label="名前を入力"
                     variant="outlined"
                     rows="1">
@@ -64,7 +64,7 @@
 <script setup lang="ts">
     import { ref } from 'vue';
     import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
-    const form = ref();
+    const name = ref();
     const email = ref();
     const password = ref();
     const password_confirm= ref();
@@ -86,25 +86,29 @@
 
     function submit(events:SubmitEvent):void {
         console.log("submit");
+        console.log("name", name.value)
         console.log("email", email.value);
         console.log("password", password.value);
         console.log("password_confirm", password_confirm.value);
         const results = events;
         alert(JSON.stringify(results, null, 2));
-
-
-    const options: AxiosRequestConfig = {
-        url: "http://localhost:3333//register/user",
-        method: "GET"
+        type request = {
+            "user": {
+                "email":string,
+                "password":string,
+                "password_confirm":string
+            }
+        }
+        const data_request:request = {'user': {"name":name.value, "email":email.value, "password":password.value, "password_confirm":password_confirm.value}}
+        
+        axios.post("http://localhost:3333//register/user", JSON.stringify(data_request), {headers:{'Content-Type': 'application/json'}})
+            .then((res: AxiosResponse) => {
+                console.log("ユーザー登録API成功");
+            })
+            .catch((e: AxiosError<{error: string}>) => {
+                console.log("ユーザー登録API失敗");
+            })
     };
-    axios.get("http://localhost:3333//register/user")
-        .then((res: AxiosResponse) => {
-            console.log("ユーザー登録API成功");
-        })
-        .catch((e: AxiosError<{error: string}>) => {
-            console.log("ユーザー登録API失敗");
-        })
-        };
 
 </script>
 
