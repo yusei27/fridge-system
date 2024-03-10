@@ -56,8 +56,9 @@ const loginFlag = computed(
     <v-main>
       <RouterView ></RouterView>
     </v-main>
-    <v-footer color="primary">
-      Footer
+    <!-- v-fotterにapp propを付与すると画面下部に固定-->
+    <v-footer color="primary" app>
+      <div>Footer</div>
     </v-footer>
   </v-app>
 </template>
