@@ -47,6 +47,10 @@
 <script setup lang="ts">
 
     import type { VDataTable } from 'vuetify/components';
+
+    //単位テーブルのデータストア
+    import { useUnitStore } from '@/stores/unit';
+    const unitStore = useUnitStore();
     type VDataTableHeader = VDataTable["headers"];
 
     const headers: VDataTableHeader = [
