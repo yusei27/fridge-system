@@ -9,7 +9,7 @@ interface unit{
 export const useUnitStore = defineStore({
     id:'units',
     state: (): unit[] => {
-        axios.post("http:localhost:3334//get/units", {headers:{'Content-Type': 'application/json'}})
+        axios.post("http://localhost:3334//get/units", {headers:{'Content-Type': 'application/json'}})
             .then((res: AxiosResponse) => {
                 console.log(res);
             })
