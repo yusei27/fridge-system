@@ -23,6 +23,8 @@
             <v-select
                 label="単位"
                 :items="unitList"
+                item-title="name_unit"
+                item-value="id_unit"
                 v-model="recipeIngredient.unit">
             </v-select>
             <v-btn v-on:click="removeIngredient(recipeIngredient.id)">削除</v-btn>
@@ -52,7 +54,17 @@ interface ingredient{
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
 const numberOfIngredient: number[] = [1, 2, 3, 4, 5, 6, 7];
 const ingredientsList: string[] = ["じゃがいも", "ピーマン","ごま油"];
-const unitList: string[] = ["個", "大さじ","小さじ", "cm", "適量"];
+//単位テーブルのデータストア
+import { useUnitStore, unit } from '@/stores/unit';
+const unitStore = useUnitStore();
+//const unitList: string[] = ["個", "大さじ","小さじ", "cm", "適量"];
+//材料テーブルのデータストア
+console.log("aaaaaaa");
+import { useIngredientStore } from '@/stores/ingredient';
+const ingredientStore = useIngredientStore();
+ingredientStore.initList();
+const ingredientList: ingredient[] = ingredientStore.ingredientList;
+
 let counter: number = 0;
 
 const recipeIngredientsList: ingredient[] = reactive([{id:counter, name:null, number:null, unit:null}]);

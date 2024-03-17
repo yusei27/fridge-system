@@ -20,6 +20,9 @@ const loginFlag = computed(
     <v-app-bar color="primary">
       <v-app-bar-title>冷蔵庫ちゃん</v-app-bar-title>
       <template v-slot:append v-if="loginFlag">
+        <RouterLink v-bind:to="{name: 'Main'}" tag="v-btn">
+          <v-btn class="app-bar-button">ホーム画面</v-btn>
+        </RouterLink>
         <RouterLink v-bind:to="{name: 'ShoppingList'}" tag="v-btn">
           <v-btn class="app-bar-button">買い物リスト</v-btn>
         </RouterLink>

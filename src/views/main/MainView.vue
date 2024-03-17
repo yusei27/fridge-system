@@ -51,6 +51,7 @@
     //単位テーブルのデータストア
     import { useUnitStore } from '@/stores/unit';
     const unitStore = useUnitStore();
+    unitStore.initList();//単位データの取得
     type VDataTableHeader = VDataTable["headers"];
 
     const headers: VDataTableHeader = [
