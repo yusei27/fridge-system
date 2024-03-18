@@ -4,6 +4,7 @@
         <h3>[レシピ名]</h3>
         <v-text-field
             label="レシピ名"
+            v-model="recipeName"
         ></v-text-field>
         <h3>[人数]</h3>
         <v-select :items="numberOfPeopleSelect">
@@ -13,6 +14,8 @@
             <v-combobox
                 label="材料"
                 :items="ingredientsList"
+                item-title="name_ingredient"
+                item-value="id_ingredient"
                 v-model="recipeIngredient.name"
             ></v-combobox>
             <v-select
@@ -34,36 +37,39 @@
         </v-row>
         <v-row>
             <v-textarea
-                label="作り方">
+                label="作り方"
+                v-model="recipeMethod">
             </v-textarea>
         </v-row>
         <v-row>
-            <v-btn>保存</v-btn>
+            <v-btn v-on:click="registerRecipe">保存</v-btn>
         </v-row>
     </v-container>
 </template>
 
 <script setup lang="ts">
 import {reactive} from "vue";
-interface ingredient{
-    id: number
-    name: string,
-    number: number,
-    unit: string
-}
+// interface ingredient{
+//     id: number
+//     name: string,
+//     number: number,
+//     unit: string
+// }
+var recipeName:string;
+var recipeMethod:string;
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
 const numberOfIngredient: number[] = [1, 2, 3, 4, 5, 6, 7];
-const ingredientsList: string[] = ["じゃがいも", "ピーマン","ごま油"];
 //単位テーブルのデータストア
 import { useUnitStore, unit } from '@/stores/unit';
 const unitStore = useUnitStore();
-//const unitList: string[] = ["個", "大さじ","小さじ", "cm", "適量"];
+const unitList: unit[] = unitStore.unitList;
 //材料テーブルのデータストア
 console.log("aaaaaaa");
-import { useIngredientStore } from '@/stores/ingredient';
+import { useIngredientStore, ingredient } from '@/stores/ingredient';
 const ingredientStore = useIngredientStore();
 ingredientStore.initList();
-const ingredientList: ingredient[] = ingredientStore.ingredientList;
+const ingredientsList: ingredient[] = ingredientStore.ingredientList;
+console.log("ingredientsList", ingredientsList)
 
 let counter: number = 0;
 
@@ -78,5 +84,12 @@ function removeIngredient(id): void{
     const idRemoveIngredient = recipeIngredientsList.findIndex(element => element.id === id);
     console.log("index", idRemoveIngredient);
     recipeIngredientsList.splice(idRemoveIngredient, 1);
+}
+
+function registerRecipe(): void{
+    console.log("保存ボタン開始");
+    console.log("レシピ名", recipeName);
+    console.log("作り方", recipeMethod);
+
 }
 </script>

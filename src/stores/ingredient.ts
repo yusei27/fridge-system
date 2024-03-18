@@ -44,17 +44,16 @@ export const useIngredientStore = defineStore({
                         console.log("select/data_成功");
                         this.ingredientList.splice(0)//配列のなかみを空に(再取得時のため)
                         console.log("res data", res.data)
-                        const datas: unit[] = [];
                         res.data.data.forEach((resData:ingredient) => {
-                            const data: unit = {
+                            const data: ingredient = {
                                 id_ingredient: resData["id_ingredient"],
-                                name_ingredient: resData["name_unit"],
+                                name_ingredient: resData["name_ingredient"],
                                 fk_id_unit: resData["fk_id_unit"],
                                 fk_id_genre: resData["fk_id_genre"]
                             };
                             this.ingredientList.push(data);
                         });
-                        console.log("ingredientList");
+                        console.log("ingredientList store");
                         console.log(this.ingredientList);
                     })
                     .catch((e: AxiosError<{error: string}>) => {
