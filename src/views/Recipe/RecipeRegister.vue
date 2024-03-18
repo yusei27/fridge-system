@@ -49,12 +49,12 @@
 
 <script setup lang="ts">
 import {reactive} from "vue";
-// interface ingredient{
-//     id: number
-//     name: string,
-//     number: number,
-//     unit: string
-// }
+interface ingredient_row{
+    id: number
+    name: string,
+    number: number,
+    unit: string
+}
 var recipeName:string;
 var recipeMethod:string;
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
@@ -73,7 +73,7 @@ console.log("ingredientsList", ingredientsList)
 
 let counter: number = 0;
 
-const recipeIngredientsList: ingredient[] = reactive([{id:counter, name:null, number:null, unit:null}]);
+const recipeIngredientsList: ingredient_row[] = reactive([{id:counter, name:null, number:null, unit:null}]);
 
 function addIngredient(): void{
     recipeIngredientsList.push({id:counter++, name:null, number:null, unit:null});
@@ -90,6 +90,10 @@ function registerRecipe(): void{
     console.log("保存ボタン開始");
     console.log("レシピ名", recipeName);
     console.log("作り方", recipeMethod);
+    recipeIngredientsList.forEach((obj, index) => {
+        console.log("材料", obj.name);
+        console.log("層数", obj.number);
+    })
 
 }
 </script>
