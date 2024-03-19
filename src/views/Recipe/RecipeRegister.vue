@@ -91,8 +91,13 @@ function registerRecipe(): void{
     console.log("レシピ名", recipeName);
     console.log("作り方", recipeMethod);
     recipeIngredientsList.forEach((obj, index) => {
-        console.log("材料", obj.name);
+        if (typeof obj.name == "string"){
+            console.log("未登録材料", obj.name)
+        }else{
+            console.log("材料", obj.name["id_ingredient"])
+        }
         console.log("層数", obj.number);
+        console.log("単位", obj.unit)
     })
 
 }
