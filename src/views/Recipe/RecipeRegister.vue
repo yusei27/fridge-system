@@ -4,13 +4,13 @@
         <h3>[レシピ名]</h3>
         <v-text-field
             label="レシピ名"
-            v-bind="recipeName"
+            v-model="recipeName"
         ></v-text-field>
         <h3>[人前]</h3>
         <v-select
             label="人前"
             :items="numberOfPeopleSelect"
-            v-bind="recipeServingSize"
+            v-model="recipeServingSize"
             >
         </v-select>
         <h3>[材料]</h3>
@@ -49,7 +49,7 @@
         <v-row>
             <v-textarea
                 label="作り方"
-                v-bind="recipeMethod">
+                v-model="recipeMethod">
             </v-textarea>
         </v-row>
         <v-row>
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 interface ingredient_row{
     id: number
     name: string,
@@ -67,9 +67,9 @@ interface ingredient_row{
     unit: number,
     genre:number
 }
-var recipeName:string;
-var recipeMethod:string;
-var recipeServingSize:string;
+const recipeName = ref("");
+var recipeMethod = ref();
+var recipeServingSize = ref();
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
 const numberOfIngredient: number[] = [1, 2, 3, 4, 5, 6, 7];
 
@@ -152,9 +152,9 @@ function registerRecipe(): void{
             )
         }
         const request = {
-            "name_recipe":recipeName,
-            //"serving_size": Number(recipeServingSize.replace("人", "")),//ex ３人→3
-            "method":recipeMethod,
+            "name_recipe":recipeName.value,
+            "serving_size": Number(recipeServingSize.value.replace("人", "")),//ex ["３人"]→3
+            "method":recipeMethod.value,
             "ingredient_alredy_exist":ingredientsExistList,//すでに材料が材料テーブルに登録されているリスト
             "ingredient_not_exist":ingredientsNotExistList//まだ材料が材料テーブルに登録されていないリスト
         }
