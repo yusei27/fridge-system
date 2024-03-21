@@ -60,6 +60,8 @@
 
 <script setup lang="ts">
 import {reactive, ref} from "vue";
+import type {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
+import axios from "axios"
 interface ingredient_row{
     id: number
     name: string,
@@ -159,6 +161,19 @@ function registerRecipe(): void{
             "ingredient_not_exist":ingredientsNotExistList//まだ材料が材料テーブルに登録されていないリスト
         }
         console.log("レシピ保存リクエスト", request);
+
+        axios.post("http://localhost:3334//register/recipe",
+                JSON.stringify(request),
+                {headers:{'Content-Type': 'application/json'}})
+                    .then((res: AxiosResponse) => {
+                        console.log("register/recipe成功");
+                        console.log("res data", res.data)
+                        alert("レシピ登録に成功しました。");
+                    })
+                    .catch((e: AxiosError<{error: string}>) => {
+                        alert("材料テーブル取得失敗");
+                        return 
+                    })
     });
 
 }
