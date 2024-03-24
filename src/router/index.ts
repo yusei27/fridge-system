@@ -34,9 +34,14 @@ const routeSetting: RouteRecordRaw[] = [
     component: RecipeRegister
   },
   {
-    path: '/RecipeDetail',
+    path: '/RecipeDetail/:id_recipe',
     name: 'RecipeDetail',
-    component: RecipeDetail
+    component: RecipeDetail,
+    props: route => {
+      //componentに渡すデータを設定
+      console.log('route', route);
+     return {id_recipe:route.params.id_recipe}
+    }
   },
   {
     path: '/UserRegister',
@@ -47,7 +52,7 @@ const routeSetting: RouteRecordRaw[] = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routeSetting
+  routes: routeSetting,
 });
 
 export default router;

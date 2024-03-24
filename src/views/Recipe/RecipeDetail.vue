@@ -20,7 +20,16 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router';
 import type {VDataTable} from 'vuetify/components';
+
+interface Props{
+    id_recipe: number;
+}
+
+const props = defineProps<Props>();
+console.log('propsのID', props.id_recipe)
+
 type VDataTableHeader = VDataTable["headers"];
 interface ingredients{
     id: number,

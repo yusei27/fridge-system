@@ -3,11 +3,12 @@
         <h2>レシピ一覧</h2>    
         <v-data-table
             :headers="headersRecipeListTable"
-            :items="recipeItemList"
+            :items="recipeList"
         >
             <template v-slot:item.hensyuu="{ item }">
-                <router-link v-bind:to="{name: 'RecipeDetail'}">
-                    <v-btn>詳細</v-btn>
+                <router-link
+                v-bind:to="{name: 'RecipeDetail', params:{id_recipe:item.id_recipe} }">
+                    <v-btn>{{ item.id_recipe }}詳細</v-btn>
                 </router-link>
             </template>
             <template v-slot:item.delete="{ item }">
@@ -24,21 +25,27 @@
 import type {VDataTable} from 'vuetify/components';
 type VDataTableHeader = VDataTable["headers"];
 
+//レシピデータのストア
+import { useRecipeStore, recipe } from '@/stores/recipe';
+const recipeStore = useRecipeStore();
+recipeStore.initList();
+const recipeList: recipe[] = recipeStore.recipeList;
+
 const headersRecipeListTable: VDataTableHeader = [
-    {key: "id"},
-    {key: "name"},
+    {key: "id_recipe"},
+    {key: "name_recipe"},
     {key: "hensyuu"},
     {key: "delete"}
 ];
 
 //レシピ一覧リスト
-interface recipeItem{
-    id: number,
-    name: string
-};
+// interface recipeItem{
+//     id: number,
+//     name: string
+// };
 
-const recipeItemList: recipeItem[] = [
-    {id:1, name:"肉じゃが"},
-    {id:2, name:"肉うどん"}
-];
+// const recipeItemList: recipeItem[] = [
+//     {id:1, name:"肉じゃが"},
+//     {id:2, name:"肉うどん"}
+// ];
 </script>
