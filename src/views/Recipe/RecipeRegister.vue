@@ -153,28 +153,28 @@ function registerRecipe(): void{
                 }
             )
         }
-        const request = {
+
+    });
+    const request = {
             "name_recipe":recipeName.value,
             "serving_size": Number(recipeServingSize.value.replace("人", "")),//ex ["３人"]→3
             "method":recipeMethod.value,
             "ingredient_alredy_exist":ingredientsExistList,//すでに材料が材料テーブルに登録されているリスト
             "ingredient_not_exist":ingredientsNotExistList//まだ材料が材料テーブルに登録されていないリスト
         }
-        console.log("レシピ保存リクエスト", request);
+    console.log("レシピ保存リクエスト", request);
 
-        axios.post("http://localhost:3334//register/recipe",
-                JSON.stringify(request),
-                {headers:{'Content-Type': 'application/json'}})
-                    .then((res: AxiosResponse) => {
-                        console.log("register/recipe成功");
-                        console.log("res data", res.data)
-                        alert("レシピ登録に成功しました。");
-                    })
-                    .catch((e: AxiosError<{error: string}>) => {
-                        alert("材料テーブル取得失敗");
-                        return 
-                    })
-    });
-
+    axios.post("http://localhost:3334//register/recipe",
+            JSON.stringify(request),
+            {headers:{'Content-Type': 'application/json'}})
+                .then((res: AxiosResponse) => {
+                    console.log("register/recipe成功");
+                    console.log("res data", res.data)
+                    alert("レシピ登録に成功しました。");
+                })
+                .catch((e: AxiosError<{error: string}>) => {
+                    alert("材料テーブル取得失敗");
+                    return 
+                })
 }
 </script>
