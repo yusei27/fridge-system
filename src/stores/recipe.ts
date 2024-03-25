@@ -64,6 +64,14 @@ export const useRecipeStore = defineStore({
                         return 
                     })
 
+        },
+        getIngredientsFromRecipe(id_recipe: number): void {
+            //１レシピに紐づく材料を全量取得する
+            console.log('レシピストア、レシピに紐づく材料を取得　レシピId = ', id_recipe);
+            const table: string = 'ingredient_table';
+            const columns: string[] = ["id_ingredient", "name_ingredient", "fk_id_unit", "fk_id_genre"];
+
+
         }
     }
 })

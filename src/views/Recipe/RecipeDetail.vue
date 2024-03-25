@@ -22,13 +22,18 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
 import type {VDataTable} from 'vuetify/components';
-
+//propsで表示するレシピIDを取得
 interface Props{
     id_recipe: number;
 }
-
 const props = defineProps<Props>();
-console.log('propsのID', props.id_recipe)
+const id_recipe: number = props.id_recipe;
+console.log('propsのID', props.id_recipe);
+
+//レシピストア
+import { useRecipeStore, recipe} from '@/stores/recipe';
+const recipeStore = useRecipeStore();
+recipeStore.getIngredientsFromRecipe(id_recipe)
 
 type VDataTableHeader = VDataTable["headers"];
 interface ingredients{
