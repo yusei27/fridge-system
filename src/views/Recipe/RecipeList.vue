@@ -29,8 +29,8 @@ type VDataTableHeader = VDataTable["headers"];
 import { useRecipeStore, recipe } from '@/stores/recipe';
 const recipeStore = useRecipeStore();
 recipeStore.initList();
-const recipeList: recipe[] = recipeStore.recipeList;
-
+const recipeList: recipe[] = [...recipeStore.recipeList.values()];
+console.log("aaaaaa", recipeList);
 const headersRecipeListTable: VDataTableHeader = [
     {key: "id_recipe"},
     {key: "name_recipe"},

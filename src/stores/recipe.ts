@@ -7,7 +7,7 @@ import type {ingredient} from '@/stores/ingredient'
 //https://qiita.com/tsuchinoko0102/items/7a8d4ad633291ac128e2
 
 interface State {
-    recipeList: Array<recipe>;
+    recipeList: Map<number, recipe>;
 }
 
 export interface recipe{
@@ -23,11 +23,22 @@ type request = {
     "columns": string[]
 }
 
+type request_2 = {
+    [key:string]:any
+}
+
 export const useRecipeStore = defineStore({
     id:'recipes',
-    state: (): State=> ({recipeList: new Array<recipe>()}),
+    state: (): State=> ({recipeList: new Map<number, recipe>()}),
 
-        
+    getters: {
+        getById: (state) => {
+            return (id:number): recipe => {
+                const recipe = state.recipeList.get(id) as recipe;
+                return recipe;
+            }
+        }
+    },    
     actions: {
         initList(): void {
             console.log("レシピテーブル取得")
@@ -44,7 +55,7 @@ export const useRecipeStore = defineStore({
                 {headers:{'Content-Type': 'application/json'}})
                     .then((res: AxiosResponse) => {
                         console.log("select/data_成功");
-                        this.recipeList.splice(0)//配列のなかみを空に(再取得時のため)
+0
                         console.log("res data", res.data)
                         res.data.data.forEach((resData:recipe) => {
                             const data: recipe = {
@@ -54,7 +65,7 @@ export const useRecipeStore = defineStore({
                                 ingredients: [],
                                 method: resData["method"]
                             };
-                            this.recipeList.push(data);
+                            this.recipeList.set(resData["id_recipe"], data);
                         });
                         console.log("recipeList store");
                         console.log(this.recipeList);
@@ -70,7 +81,33 @@ export const useRecipeStore = defineStore({
             console.log('レシピストア、レシピに紐づく材料を取得　レシピId = ', id_recipe);
             const table: string = 'ingredient_table';
             const columns: string[] = ["id_ingredient", "name_ingredient", "fk_id_unit", "fk_id_genre"];
-
+            const request:request_2 = {"id_recipe":id_recipe}
+            axios.post("http://localhost:3334//get/ingredients/from/recipe",
+                JSON.stringify(request),
+                {headers:{'Content-Type': 'application/json'}})
+                    .then((res: AxiosResponse) => {
+                        console.log("レシピ詳細取得成功");
+                        console.log("res data", res.data)
+                        const recipe = this.recipeList.get(id_recipe);
+                        const ingredients = res.data.data
+                        console.log("ingredients", ingredients)
+                        // res.data.data.forEach((resData:recipe) => {
+                        //     const data: recipe = {
+                        //         id_recipe: resData["id_recipe"],
+                        //         name_recipe: resData["name_recipe"],
+                        //         serving_size: resData["serving_size"],
+                        //         ingredients: [],
+                        //         method: resData["method"]
+                        //     };
+                        //     this.recipeList.push(data);
+                        // });
+                        // console.log("recipeList store");
+                        // console.log(this.recipeList);
+                    })
+                    .catch((e: AxiosError<{error: string}>) => {
+                        alert("レシピテーブル取得失敗");
+                        return 
+                    })
 
         }
     }
