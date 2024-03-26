@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
 import type {VDataTable} from 'vuetify/components';
 //propsで表示するレシピIDを取得
 interface Props{
@@ -36,22 +35,25 @@ const recipeStore = useRecipeStore();
 recipeStore.getIngredientsFromRecipe(id_recipe)
 
 type VDataTableHeader = VDataTable["headers"];
-interface ingredients{
-    id: number,
-    name: string,
-    number: number,
-    unit: string
+interface ingredient_recipe{
+    id_ingredient: number,
+    name_ingredient: string,
+    amount: number,
+    id_unit: number,
+    id_genre: number
 };
-
-const recipeIngredient: ingredient[] = [
-    {id:1, name:"じゃがいも", number:2, unit:"個"},
-    {id:2, name:"ごま油", number:3, unit:"大さじ"}
-];
+setTimeout(() => {
+    console.log("Hello, TypeScript!");
+}, 3000);
+//const recipeIngredient: ingredient_recipe[] = recipeStore.getById(id_recipe).ingredients;
+const recipeIngredient: ingredient_recipe[] = recipeStore.getById(id_recipe)
+console.log("取得した材料", recipeIngredient)
 
 const headersRecipeIngredientTable: VDataTableHeader = [
-    {key:"id"},
-    {key:"name"},
-    {key:"number"},
-    {key:"unit"},
+    {key:"id_ingredient"},
+    {key:"name_ingredient"},
+    {key:"amount"},
+    {key:"id_unit"},
+    {key:"id_genre"},
 ]
 </script>

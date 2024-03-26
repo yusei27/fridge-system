@@ -15,7 +15,15 @@ export interface recipe{
     name_recipe: string,
     serving_size: number,
     method: string
-    ingredients: ingredient[]
+    ingredients: ingredient_recipe[]
+};
+
+interface ingredient_recipe{
+    id_ingredient: number,
+    name_ingredient: string,
+    amount: number,
+    id_unit: number,
+    id_genre: number
 };
 
 type request = {
@@ -89,8 +97,10 @@ export const useRecipeStore = defineStore({
                         console.log("レシピ詳細取得成功");
                         console.log("res data", res.data)
                         const recipe = this.recipeList.get(id_recipe);
+                        this.recipeList[id_recipe].ingredients = res.data.data;
                         const ingredients = res.data.data
                         console.log("ingredients", ingredients)
+                        
                         // res.data.data.forEach((resData:recipe) => {
                         //     const data: recipe = {
                         //         id_recipe: resData["id_recipe"],
