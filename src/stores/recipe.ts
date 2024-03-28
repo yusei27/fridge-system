@@ -8,6 +8,7 @@ import type {ingredient} from '@/stores/ingredient'
 
 interface State {
     recipeList: Map<number, recipe>;
+    isLoading:boolean;
 }
 
 export interface recipe{
@@ -37,7 +38,14 @@ type request_2 = {
 
 export const useRecipeStore = defineStore({
     id:'recipes',
-    state: (): State=> ({recipeList: new Map<number, recipe>()}),
+    state: (): State=> {
+        return{               
+            
+            
+            recipeList: new Map<number, recipe>(),
+            isLoading:false
+            }
+    },
 
     getters: {
         getById: (state) => {
@@ -50,6 +58,7 @@ export const useRecipeStore = defineStore({
     actions: {
         initList(): void {
             console.log("レシピテーブル取得")
+            this.isLoading = true;
             //request作成
             const columns: string[] = ["id_recipe", "name_recipe", "serving_size", "method"];
             const table: string = 'recipe_table'
@@ -77,6 +86,8 @@ export const useRecipeStore = defineStore({
                         });
                         console.log("recipeList store");
                         console.log(this.recipeList);
+                        console.log("sssssssssss")
+                        this.isLoading = false;
                     })
                     .catch((e: AxiosError<{error: string}>) => {
                         alert("レシピテーブル取得失敗");

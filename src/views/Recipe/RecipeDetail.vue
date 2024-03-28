@@ -10,6 +10,7 @@
         <v-data-table
             :headers="headersRecipeIngredientTable"
             :items="recipeIngredient"
+            v-model="recipeIngredient"
         >
             <template #headers></template><!-- v-data-tabeeのヘッダーを削除-->
             <template #bottom></template><!-- v-data-tabeeのフッターを削除-->
@@ -20,6 +21,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { reactive } from 'vue';
 import type {VDataTable} from 'vuetify/components';
 //propsで表示するレシピIDを取得
 interface Props{
@@ -45,9 +48,10 @@ interface ingredient_recipe{
 setTimeout(() => {
     console.log("Hello, TypeScript!");
 }, 3000);
-//const recipeIngredient: ingredient_recipe[] = recipeStore.getById(id_recipe).ingredients;
-const recipeIngredient: ingredient_recipe[] = recipeStore.getById(id_recipe)
-console.log("取得した材料", recipeIngredient)
+
+const recipeIngredient1: ingredient_recipe[] = recipeStore.getById(id_recipe);
+const recipeIngredient = reactive(recipeIngredient1)
+console.log("取得した材料", recipeIngredient1)
 
 const headersRecipeIngredientTable: VDataTableHeader = [
     {key:"id_ingredient"},
@@ -56,4 +60,16 @@ const headersRecipeIngredientTable: VDataTableHeader = [
     {key:"id_unit"},
     {key:"id_genre"},
 ]
+
+export {
+    setup() {
+    const that: any = getCurrentInstance();
+    onMounted(() => {
+      console.log("Mounted - ok");
+      console.log(that.$refs.table.temp());//ERROR that.$refs is undefined
+    });
+    return {};
+  }
+
+}
 </script>
