@@ -2,9 +2,12 @@
     <v-container ref="table">
         <h2>レシピ一覧</h2>
         {{ isLoading }}
+        <br>
+        {{ recipeList }}
         <v-data-table
             :headers="headersRecipeListTable"
             :items="recipeList"
+            :key="isLoading"
             
         >
             <template v-slot:item.hensyuu="{ item }">
@@ -24,18 +27,16 @@
 </template>
 
 <script setup lang="ts">
-import { reactive} from 'vue';
+import { reactive, ref} from 'vue';
 import {storeToRefs} from 'pinia'
 import type {VDataTable} from 'vuetify/components';
 type VDataTableHeader = VDataTable["headers"];
 
 //レシピデータのストア
-import { useRecipeStore, recipe } from '@/stores/recipe';
-import { watch } from 'vue';
+import { useRecipeStore} from '@/stores/recipe';
 const recipeStore = reactive(useRecipeStore());
 recipeStore.initList();
-var {isLoading} = storeToRefs(recipeStore);
-const recipeList: recipe[] = reactive([...recipeStore.recipeList.values()]);
+var {isLoading, recipeList} = storeToRefs(recipeStore);
 console.log("aaaaaa", recipeList);
 const headersRecipeListTable: VDataTableHeader = [
     {key: "id_recipe"},
@@ -43,13 +44,6 @@ const headersRecipeListTable: VDataTableHeader = [
     {key: "hensyuu"},
     {key: "delete"}
 ];
-console.log(this.$refs.table)
-watch(isLoading,
-    ():void =>{
-        console.log("ウォッチ!!!!!!!!", isLoading.value);
-        this.$refs.table.refresh();
-    }
-);
 
 //レシピ一覧リスト
 // interface recipeItem{

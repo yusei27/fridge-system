@@ -59,17 +59,8 @@ const headersRecipeIngredientTable: VDataTableHeader = [
     {key:"amount"},
     {key:"id_unit"},
     {key:"id_genre"},
-]
+];
 
-export {
-    setup() {
-    const that: any = getCurrentInstance();
-    onMounted(() => {
-      console.log("Mounted - ok");
-      console.log(that.$refs.table.temp());//ERROR that.$refs is undefined
-    });
-    return {};
-  }
 
-}
+
 </script>

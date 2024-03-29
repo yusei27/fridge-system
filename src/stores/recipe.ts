@@ -7,7 +7,8 @@ import type {ingredient} from '@/stores/ingredient'
 //https://qiita.com/tsuchinoko0102/items/7a8d4ad633291ac128e2
 
 interface State {
-    recipeList: Map<number, recipe>;
+    recipeListMap: Map<number, recipe>;
+    recipeList: recipe[];
     isLoading:boolean;
 }
 
@@ -42,7 +43,8 @@ export const useRecipeStore = defineStore({
         return{               
             
             
-            recipeList: new Map<number, recipe>(),
+            recipeListMap: new Map<number, recipe>(),
+            recipeList: new Array,
             isLoading:false
             }
     },
@@ -50,7 +52,7 @@ export const useRecipeStore = defineStore({
     getters: {
         getById: (state) => {
             return (id:number): recipe => {
-                const recipe = state.recipeList.get(id) as recipe;
+                const recipe = state.recipeListMap.get(id) as recipe;
                 return recipe;
             }
         }
@@ -74,6 +76,7 @@ export const useRecipeStore = defineStore({
                         console.log("select/data_成功");
 0
                         console.log("res data", res.data)
+                        this.recipeList.splice(0)//レシピリストの初期化、再取得用
                         res.data.data.forEach((resData:recipe) => {
                             const data: recipe = {
                                 id_recipe: resData["id_recipe"],
@@ -82,7 +85,8 @@ export const useRecipeStore = defineStore({
                                 ingredients: [],
                                 method: resData["method"]
                             };
-                            this.recipeList.set(resData["id_recipe"], data);
+                            this.recipeListMap.set(resData["id_recipe"], data);
+                            this.recipeList.push(data);
                         });
                         console.log("recipeList store");
                         console.log(this.recipeList);
@@ -107,7 +111,7 @@ export const useRecipeStore = defineStore({
                     .then((res: AxiosResponse) => {
                         console.log("レシピ詳細取得成功");
                         console.log("res data", res.data)
-                        const recipe = this.recipeList.get(id_recipe);
+                        const recipe = this.recipeListMap.get(id_recipe);
                         this.recipeList[id_recipe].ingredients = res.data.data;
                         const ingredients = res.data.data
                         console.log("ingredients", ingredients)
