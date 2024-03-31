@@ -6,6 +6,7 @@ import axios from "axios"
 //https://qiita.com/tsuchinoko0102/items/7a8d4ad633291ac128e2
 
 interface State {
+    genreListMap: Map<string, genre>;
     genreList: Array<genre>;
 }
 
@@ -21,7 +22,12 @@ type request = {
 
 export const useGenreStore = defineStore({
     id:'genres',
-    state: (): State=> ({genreList: new Array<genre>()}),
+    state: (): State=> {
+        return{
+            genreListMap: new Map<string, genre>(),
+            genreList: new Array<genre>()
+        }
+    },
 
         
     actions: {
@@ -47,6 +53,7 @@ export const useGenreStore = defineStore({
                                 id_genre: resData["id_genre"],
                                 name_genre: resData["name_genre"],
                             };
+                            this.genreListMap.set(String(data["id_genre"]), data);
                             this.genreList.push(data);
                         });
                         console.log("genreList store");

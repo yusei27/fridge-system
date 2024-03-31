@@ -6,10 +6,15 @@ import type {ingredient} from '@/stores/ingredient'
 //現状リロードでストアが吹っ飛ぶので、そのうちセッションストレージに保存するようにする
 //https://qiita.com/tsuchinoko0102/items/7a8d4ad633291ac128e2
 
+
+//連想配列のキーはnumberを使うとvalueもnumberにしないといけない
+//https://9cubed.info/article/typescript/0013
+
 interface State {
-    recipeListMap: Map<number, recipe>;
+    recipeListMap: Map<string, recipe>;
     recipeList: recipe[];
     isLoading:boolean;
+
 }
 
 export interface recipe{
@@ -25,7 +30,11 @@ interface ingredient_recipe{
     name_ingredient: string,
     amount: number,
     id_unit: number,
-    id_genre: number
+    fk_id_unit?: number,
+    name_unit: string,
+    id_genre: number,
+    fk_id_genre?: number,
+    name_genre: string,
 };
 
 type request = {
@@ -41,17 +50,15 @@ export const useRecipeStore = defineStore({
     id:'recipes',
     state: (): State=> {
         return{               
-            
-            
-            recipeListMap: new Map<number, recipe>(),
+            recipeListMap: new Map<string, recipe>(),
             recipeList: new Array,
             isLoading:false
-            }
+        }
     },
 
     getters: {
         getById: (state) => {
-            return (id:number): recipe => {
+            return (id:string): recipe => {
                 const recipe = state.recipeListMap.get(id) as recipe;
                 return recipe;
             }
@@ -85,7 +92,7 @@ export const useRecipeStore = defineStore({
                                 ingredients: [],
                                 method: resData["method"]
                             };
-                            this.recipeListMap.set(resData["id_recipe"], data);
+                            this.recipeListMap.set(String(resData["id_recipe"]), data);
                             this.recipeList.push(data);
                         });
                         console.log("recipeList store");
@@ -94,46 +101,80 @@ export const useRecipeStore = defineStore({
                         this.isLoading = false;
                     })
                     .catch((e: AxiosError<{error: string}>) => {
-                        alert("レシピテーブル取得失敗");
+                        alert("レシピテーブル取得失敗3" + e);
                         return 
                     })
 
         },
-        getIngredientsFromRecipe(id_recipe: number): void {
+        async getIngredientsFromRecipe(id_recipe: number):Promise<Array<ingredient_recipe>> {
             //１レシピに紐づく材料を全量取得する
             console.log('レシピストア、レシピに紐づく材料を取得　レシピId = ', id_recipe);
             const table: string = 'ingredient_table';
             const columns: string[] = ["id_ingredient", "name_ingredient", "fk_id_unit", "fk_id_genre"];
             const request:request_2 = {"id_recipe":id_recipe}
-            axios.post("http://localhost:3334//get/ingredients/from/recipe",
+
+            return  await axios.post("http://localhost:3334//get/ingredients/from/recipe",
                 JSON.stringify(request),
                 {headers:{'Content-Type': 'application/json'}})
-                    .then((res: AxiosResponse) => {
-                        console.log("レシピ詳細取得成功");
-                        console.log("res data", res.data)
-                        const recipe = this.recipeListMap.get(id_recipe);
-                        this.recipeList[id_recipe].ingredients = res.data.data;
-                        const ingredients = res.data.data
-                        console.log("ingredients", ingredients)
-                        
-                        // res.data.data.forEach((resData:recipe) => {
-                        //     const data: recipe = {
-                        //         id_recipe: resData["id_recipe"],
-                        //         name_recipe: resData["name_recipe"],
-                        //         serving_size: resData["serving_size"],
-                        //         ingredients: [],
-                        //         method: resData["method"]
-                        //     };
-                        //     this.recipeList.push(data);
-                        // });
-                        // console.log("recipeList store");
-                        // console.log(this.recipeList);
-                    })
-                    .catch((e: AxiosError<{error: string}>) => {
-                        alert("レシピテーブル取得失敗");
-                        return 
-                    })
+                .then((res: AxiosResponse) => {
+                    console.log("非同期レシピ詳細取得成功");
+                    console.log("res data", res.data)
+                    const recipe = this.recipeListMap.get(String(id_recipe));
+                    console.log("recipe", recipe)
+                    const ingredients = res.data.data
+                    console.log("ingredients", ingredients)
+                    console.log("this.recipeList[id_recipe]", this.recipeListMap);
+                    return Promise.resolve(ingredients)
+                })
+                .catch((e: AxiosError<{error: string}>) => {
+                    console.log("error", e)
+                    return Promise.reject("9999")
+                })
+            
+            // return new Promise(function(resolve){
+            //     console.log("resoleve内");
+            //     resolve("98");
+            // })
 
+            // await axios.post("http://localhost:3334//get/ingredients/from/recipe",
+            //     JSON.stringify(request),
+            //     {headers:{'Content-Type': 'application/json'}})
+            //         .then((res: AxiosResponse) => {
+            //             try {
+            //                 console.log("非同期レシピ詳細取得成功");
+            //                 console.log("res data", res.data)
+            //                 const recipe = this.recipeListMap.get(String(id_recipe));
+            //                 console.log("recipe", recipe)
+            //                 const ingredients = res.data.data
+            //                 console.log("ingredients", ingredients)
+            //                 console.log("this.recipeList[id_recipe]", this.recipeListMap);
+            //                 //this.recipeListMap.get(String(id_recipe)).ingredients = res.data.data;
+            //                 console.log("通貨");
+    
+            //                 return new Promise(function(resolve){
+            //                     console.log("resoleve内");
+            //                     resolve("98");
+                                
+            //                 })
+            //             }
+            //             catch(e){
+            //                 console.log("エラー", e);
+            //                 return new Promise((resolve, reject) => {
+            //                     console.log("resoleve内");
+            //                     reject("98");
+            //                 })
+            //             }
+
+            //         })
+            //         .catch((e: AxiosError<{error: string}>) => {
+            //             alert("レシピテーブル取得失敗2" + e);
+                        
+                          
+            //             return new Promise((resolve, reject) => {
+            //                 reject("10");
+            //             });
+
+            //         })
         }
     }
 })

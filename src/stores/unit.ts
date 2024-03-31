@@ -6,6 +6,7 @@ import axios from "axios"
 //https://qiita.com/tsuchinoko0102/items/7a8d4ad633291ac128e2
 
 interface State {
+    unitListMap: Map<string, unit>;
     unitList: Array<unit>;
 }
 
@@ -16,7 +17,12 @@ export interface unit{
 
 export const useUnitStore = defineStore({
     id:'units',
-    state: (): State=> ({unitList: new Array<unit>()}),
+    state: (): State=> {
+        return {
+            unitListMap: new Map<string, unit>(),
+            unitList: new Array<unit>(),
+        }
+    },
 
         
     actions: {
@@ -32,6 +38,7 @@ export const useUnitStore = defineStore({
                             id_unit: resData["id_unit"],
                             name_unit: resData["name_unit"]
                         };
+                        this.unitListMap.set(String(data["id_unit"]), data);
                         this.unitList.push(data);
                     });
                     console.log("unitList");
