@@ -1,9 +1,6 @@
 <template>
     <v-container ref="table">
         <h2>レシピ一覧</h2>
-        {{ isLoading }}
-        <br>
-        {{ recipeList }}
         <v-data-table
             :headers="headersRecipeListTable"
             :items="recipeList"
