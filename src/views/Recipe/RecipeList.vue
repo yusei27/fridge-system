@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref} from 'vue';
+import { reactive} from 'vue';
 import {storeToRefs} from 'pinia'
 import type {VDataTable} from 'vuetify/components';
 type VDataTableHeader = VDataTable["headers"];
@@ -44,15 +44,4 @@ const headersRecipeListTable: VDataTableHeader = [
     {key: "hensyuu"},
     {key: "delete"}
 ];
-
-//レシピ一覧リスト
-// interface recipeItem{
-//     id: number,
-//     name: string
-// };
-
-// const recipeItemList: recipeItem[] = [
-//     {id:1, name:"肉じゃが"},
-//     {id:2, name:"肉うどん"}
-// ];
 </script>

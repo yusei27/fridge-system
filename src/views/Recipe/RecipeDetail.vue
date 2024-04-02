@@ -26,7 +26,7 @@
             :headers="headersRecipeIngredientTable"
             :items="recipedetail.ingredients"
         >
-            <template #headers></template><!-- v-data-tabeeのヘッダーを削除-->
+            <!--<template #headers></template>--><!-- v-data-tabeeのヘッダーを削除-->
             <template #bottom></template><!-- v-data-tabeeのフッターを削除-->
         </v-data-table>
         <h4>作り方</h4>
@@ -35,10 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { reactive } from 'vue';
 import type {VDataTable} from 'vuetify/components';
-import {watch} from 'vue'
 import {storeToRefs} from 'pinia'
 //propsで表示するレシピIDを取得
 interface Props{
@@ -55,7 +52,7 @@ const recipeStore = useRecipeStore();
 
 
 //レシピ詳細(レシピ一つ分)分のストア
-import { recipe_detail, useRecipeDetailStore } from '@/stores/recipedetail';
+import {useRecipeDetailStore } from '@/stores/recipedetail';
 const recipedetailStore = useRecipeDetailStore();
 const {recipedetail} = storeToRefs(recipedetailStore)
 
@@ -71,22 +68,6 @@ genreStore.initList();
 const genreListMap: Map<string, genre> = genreStore.genreListMap;
 
 var {isLoading, recipeList, recipeListMap} = storeToRefs(recipeStore);
-// async function getRecipeDetail(id_recipe:number) {
-//             const recipe2 =  await recipeStore.getIngredientsFromRecipe(id_recipe)
-//                 .then((result2) => {
-//                     console.log("then", result2);
-//                 })
-//                 .catch((result) => {
-//                     console.log("catch", result);
-//                 })
-//             console.log("then後", recipe2);
-            //console.log('ccccccc', recipe2)
-                // .then(
-                //     console.log('ccccccc')
-                //     recipedetailStore.recipe = recipe2
-                // )
-// }
-//getRecipeDetail(id_recipe);
 
 //レシピの材料を取得
 recipeStore.getIngredientsFromRecipe(id_recipe)
@@ -106,7 +87,6 @@ recipeStore.getIngredientsFromRecipe(id_recipe)
                             recipedetailStore.recipedetail.ingredients.push(ingredient);
                             }
                         }
-                        //recipedetailStore.recipedetail.method ="aaaaa";
                     }
                 })
                 .catch((result) => {
@@ -130,35 +110,21 @@ function getReceipeExceptIngredients(id_recipe_str: string):void{
 //すでにレシピ一覧で取得しているデータからレシピ詳細に必要なデータを取得
 getReceipeExceptIngredients(id_recipe_str);
 
-//すでにレシピ一覧で取得しているデータを取得
-
 
 
 
 
 
 type VDataTableHeader = VDataTable["headers"];
-// interface ingredient_recipe{
-//     id_ingredient: number,
-//     name_ingredient: string,
-//     amount: number,
-//     id_unit: number,
-//     id_genre: number
-// };
-
-// const recipeIngredient1: ingredient_recipe[] = recipeStore.getById(id_recipe);
-// console.log("取得した材料", recipeIngredient1)
-
 const headersRecipeIngredientTable: VDataTableHeader = [
-    {key:"fk_id_ingredient"},
-    {key:"name_ingredient"},
-    {key:"amount"},
-    {key:"fk_id_unit"},
-    {key:"name_unit"},
-    {key:"fk_id_genre"},
-    {key:"name_genre"},
-    {key:"fk_id_recipe"},
-
+    //{key:"fk_id_ingredient", title:"食材ID"},
+    {key:"name_ingredient",title:"食材名"},
+    {key:"amount", title:"量"},
+    //{key:"fk_id_unit", title:"単位ID"},
+    {key:"name_unit", title:"単位名"},
+    //{key:"fk_id_genre", title:"ジャンルID"},
+    {key:"name_genre", title:"ジャンル名"},
+    //{key:"fk_id_recipe", title:"レシピID"},
 ];
 
 
