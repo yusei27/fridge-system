@@ -53,13 +53,14 @@
             </v-textarea>
         </v-row>
         <v-row>
-            <v-btn v-on:click="registerbutton">保存</v-btn>
+            <v-btn v-on:click="registerRecipe(recipeIngredientsList, recipe_unique)">保存</v-btn>
         </v-row>
     </v-container>
 </template>
 
 <script setup lang="ts">
 import {reactive, ref} from "vue";
+//保存ボタンを押下時に起動するメソッド
 import { registerRecipe} from "@/views/Recipe/RecipeRegister_button";
 
 
@@ -76,6 +77,7 @@ var recipeMethod = ref();
 var recipeServingSize = ref();
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
 const numberOfIngredient: number[] = [1, 2, 3, 4, 5, 6, 7];
+const recipe_unique = {"recipeMethod":recipeMethod, "recipeName":recipeName, "recipeServingSize":recipeServingSize}
 
 //=================pinia読み込み  ここから
 //単位テーブルのデータストア
@@ -111,7 +113,4 @@ function removeIngredient(id: number): void{
     const idRemoveIngredient = recipeIngredientsList.findIndex(element => element.id === id);
     recipeIngredientsList.splice(idRemoveIngredient, 1);
 }
-
-//登録ボタン押下時の処理
-const registerbutton = registerRecipe(recipeIngredientsList)
 </script>

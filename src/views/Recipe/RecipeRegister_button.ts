@@ -2,8 +2,12 @@ import type {AxiosResponse, AxiosError} from "axios";
 import axios from "axios";
 
 //登録ボタン押下時の処理
- export function registerRecipe(recipeIngredientsList): void{
-    console.log("保存ボタン開始");
+ export function registerRecipe(recipeIngredientsList, recipe_unique): void{
+    console.log("保存ボタン開始", recipe_unique);
+    console.log("レシピ名", recipe_unique.recipeName.value);
+    const recipeName = recipe_unique.recipeName;
+    const recipeMethod = recipe_unique.recipeMethod;
+    const recipeServingSize = recipe_unique.recipeServingSize;
     type ingredient_alredy_exist = {
         "id_ingredient":number,
         "num":number,
