@@ -10,7 +10,7 @@
             <template v-slot:item.hensyuu="{ item }">
                 <router-link
                 v-bind:to="{name: 'RecipeDetail', params:{id_recipe:item.id_recipe} }">
-                    <v-btn>{{ item.id_recipe }}詳細</v-btn>
+                    <v-btn>詳細</v-btn>
                 </router-link>
             </template>
             <template v-slot:item.delete="{ item }">
