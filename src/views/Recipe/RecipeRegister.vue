@@ -53,15 +53,17 @@
             </v-textarea>
         </v-row>
         <v-row>
-            <v-btn v-on:click="registerRecipe">保存</v-btn>
+            <v-btn v-on:click="registerbutton">保存</v-btn>
         </v-row>
     </v-container>
 </template>
 
 <script setup lang="ts">
 import {reactive, ref} from "vue";
-import type {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
-import axios from "axios"
+import { registerRecipe} from "@/views/Recipe/RecipeRegister_button";
+
+
+
 interface ingredient_row{
     id: number
     name: string,
@@ -75,6 +77,7 @@ var recipeServingSize = ref();
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
 const numberOfIngredient: number[] = [1, 2, 3, 4, 5, 6, 7];
 
+//=================pinia読み込み  ここから
 //単位テーブルのデータストア
 import { useUnitStore, unit } from '@/stores/unit';
 const unitStore = useUnitStore();
@@ -91,83 +94,24 @@ import {useGenreStore, genre} from '@/stores/genre';
 const genreStore = useGenreStore();
 genreStore.initList();
 const genreList: genre[] = genreStore.genreList;
+//=================pinia読み込み  ここまで
 
 let counter: number = 0;
 
 const recipeIngredientsList: ingredient_row[] = reactive([{id:counter, name:null, number:null, unit:null, genre:null}]);
 
+//材料追加ボタン押下時の処理
 function addIngredient(): void{
     recipeIngredientsList.push({id:counter++, name:null, number:null, unit:null, genre:null});
 }
 
-function removeIngredient(id): void{
+
+//削除ボタン押下時の処理
+function removeIngredient(id: number): void{
     const idRemoveIngredient = recipeIngredientsList.findIndex(element => element.id === id);
     recipeIngredientsList.splice(idRemoveIngredient, 1);
 }
 
-function registerRecipe(): void{
-    console.log("保存ボタン開始");
-    type ingredient_alredy_exist = {
-        "id_ingredient":number,
-        "num":number,
-        "id_unit":number,
-        "id_genre":number
-    }
-    type ingredient_not_exist = {
-        "ingredient_name":string,
-        "num":number,
-        "id_unit":number,
-        "id_genre":number
-    }
-    type request = {
-    "name_recipe":string,
-    "serving_size": number,
-    "method":string,
-    "ingredient_alredy_exist":ingredient_alredy_exist[],//すでに材料が材料テーブルに登録されているリスト
-    "ingredient_not_exist":ingredient_not_exist[]//まだ材料が材料テーブルに登録されていないリスト
-    }
-    const ingredientsExistList: ingredient_alredy_exist[] = [];
-    const ingredientsNotExistList: ingredient_not_exist[] = [];
-    recipeIngredientsList.forEach((obj, index) => {
-        if (typeof obj.name == "string"){
-            ingredientsNotExistList.push(
-                {
-                    "ingredient_name":obj.name,
-                    "num":obj.number,
-                    "id_unit":obj.unit,
-                    "id_genre":obj.genre
-                }
-            );
-        }else{
-            ingredientsExistList.push(
-                {
-                    "id_ingredient":obj.name["id_ingredient"],
-                    "num":obj.number,
-                    "id_unit":obj.unit,
-                    "id_genre":obj.genre
-                }
-            )
-        }
-
-    });
-    const request = {
-            "name_recipe":recipeName.value,
-            "serving_size": Number(recipeServingSize.value.replace("人", "")),//ex ["３人"]→3
-            "method":recipeMethod.value,
-            "ingredient_alredy_exist":ingredientsExistList,//すでに材料が材料テーブルに登録されているリスト
-            "ingredient_not_exist":ingredientsNotExistList//まだ材料が材料テーブルに登録されていないリスト
-        }
-
-    axios.post("http://localhost:3334//register/recipe",
-            JSON.stringify(request),
-            {headers:{'Content-Type': 'application/json'}})
-                .then((res: AxiosResponse) => {
-                    console.log("register/recipe成功", res.data);
-                    alert("レシピ登録に成功しました。");
-                })
-                .catch((e: AxiosError<{error: string}>) => {
-                    alert("材料テーブル取得失敗");
-                    return 
-                })
-}
+//登録ボタン押下時の処理
+const registerbutton = registerRecipe(recipeIngredientsList)
 </script>
