@@ -37,7 +37,6 @@ import { useRecipeStore} from '@/stores/recipe';
 const recipeStore = reactive(useRecipeStore());
 recipeStore.initList();
 var {isLoading, recipeList} = storeToRefs(recipeStore);
-console.log("aaaaaa", recipeList);
 const headersRecipeListTable: VDataTableHeader = [
     {key: "id_recipe"},
     {key: "name_recipe"},

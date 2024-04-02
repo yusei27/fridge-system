@@ -81,7 +81,6 @@ const unitStore = useUnitStore();
 const unitList: unit[] = unitStore.unitList;
 
 //材料テーブルのデータストア
-console.log("aaaaaaa");
 import { useIngredientStore, ingredient } from '@/stores/ingredient';
 const ingredientStore = useIngredientStore();
 ingredientStore.initList();
@@ -99,12 +98,10 @@ const recipeIngredientsList: ingredient_row[] = reactive([{id:counter, name:null
 
 function addIngredient(): void{
     recipeIngredientsList.push({id:counter++, name:null, number:null, unit:null, genre:null});
-    console.log(recipeIngredientsList);
 }
 
 function removeIngredient(id): void{
     const idRemoveIngredient = recipeIngredientsList.findIndex(element => element.id === id);
-    console.log("index", idRemoveIngredient);
     recipeIngredientsList.splice(idRemoveIngredient, 1);
 }
 
@@ -133,7 +130,6 @@ function registerRecipe(): void{
     const ingredientsNotExistList: ingredient_not_exist[] = [];
     recipeIngredientsList.forEach((obj, index) => {
         if (typeof obj.name == "string"){
-            console.log("未登録材料", obj.name);
             ingredientsNotExistList.push(
                 {
                     "ingredient_name":obj.name,
@@ -143,7 +139,6 @@ function registerRecipe(): void{
                 }
             );
         }else{
-            console.log("材料", obj.name["id_ingredient"])
             ingredientsExistList.push(
                 {
                     "id_ingredient":obj.name["id_ingredient"],
@@ -162,14 +157,12 @@ function registerRecipe(): void{
             "ingredient_alredy_exist":ingredientsExistList,//すでに材料が材料テーブルに登録されているリスト
             "ingredient_not_exist":ingredientsNotExistList//まだ材料が材料テーブルに登録されていないリスト
         }
-    console.log("レシピ保存リクエスト", request);
 
     axios.post("http://localhost:3334//register/recipe",
             JSON.stringify(request),
             {headers:{'Content-Type': 'application/json'}})
                 .then((res: AxiosResponse) => {
-                    console.log("register/recipe成功");
-                    console.log("res data", res.data)
+                    console.log("register/recipe成功", res.data);
                     alert("レシピ登録に成功しました。");
                 })
                 .catch((e: AxiosError<{error: string}>) => {

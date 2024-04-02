@@ -1,17 +1,6 @@
 <template>
     <v-container>
         <v-row>
-            {{ recipeList }}
-            <br>
-            <br>
-            <h5><font color="red">recipedetail</font></h5>
-            {{ recipedetail.method}}
-            <br>
-            <h5><font color="red">recipedetail.ingredients</font></h5>
-            {{ recipedetail.ingredients }}
-            <br>
-        </v-row>
-        <v-row>
             <h2>レシピ詳細</h2>
         </v-row>
         <v-row>
@@ -26,7 +15,6 @@
             :headers="headersRecipeIngredientTable"
             :items="recipedetail.ingredients"
         >
-            <!--<template #headers></template>--><!-- v-data-tabeeのヘッダーを削除-->
             <template #bottom></template><!-- v-data-tabeeのフッターを削除-->
         </v-data-table>
         <h4>作り方</h4>
@@ -73,19 +61,13 @@ var {isLoading, recipeList, recipeListMap} = storeToRefs(recipeStore);
 recipeStore.getIngredientsFromRecipe(id_recipe)
                 .then((ingredients) =>{
                     console.log("then", ingredients);
-                    //if (typeof ingredient_recipe == ingredient_recipe){
-                    if (true){
-                        console.log("レシピ詳細に代入")
-                        for (const ingredient of ingredients){
-                            if (ingredient != undefined){
-                            console.log("レシピ詳細の他テーブルデータ取得")
-                            //レシピ以外のIDから表示に必要なデータを取得
-                            console.log("単位", unitListMap.get(String(ingredient.fk_id_unit)))
-                            ingredient.name_unit = unitListMap.get(String(ingredient.fk_id_unit)).name_unit;
-                            ingredient.name_genre = genreListMap.get(String(ingredient.fk_id_genre)).name_genre;
-                            console.log("加工後", ingredient)
-                            recipedetailStore.recipedetail.ingredients.push(ingredient);
-                            }
+                    console.log("レシピ詳細に代入")
+                    for (const ingredient of ingredients){
+                        if (ingredient != undefined){
+                        //レシピ以外のIDから表示に必要なデータを取得
+                        ingredient.name_unit = unitListMap.get(String(ingredient.fk_id_unit)).name_unit;
+                        ingredient.name_genre = genreListMap.get(String(ingredient.fk_id_genre)).name_genre;
+                        recipedetailStore.recipedetail.ingredients.push(ingredient);
                         }
                     }
                 })
@@ -98,7 +80,6 @@ recipeStore.getIngredientsFromRecipe(id_recipe)
 function getReceipeExceptIngredients(id_recipe_str: string):void{
     //レシピ一覧から該当のレシピ情報を取得　材料情報は別途取得
     const recipedetail = recipeStore.getById(id_recipe_str)
-    console.log("xxxxxx", recipedetail)
 
     //１レシピの詳細をrecipedetailStoreの該当箇所に代入
     recipedetailStore.recipedetail.id_recipe = id_recipe;//レシピID
@@ -126,7 +107,4 @@ const headersRecipeIngredientTable: VDataTableHeader = [
     {key:"name_genre", title:"ジャンル名"},
     //{key:"fk_id_recipe", title:"レシピID"},
 ];
-
-
-
 </script>

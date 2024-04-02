@@ -105,7 +105,4 @@
             fruitFridgeList.push(ingredient);
         }
     };
-    console.log(meatsFridgeList);
-    console.log(fishFridgeList);
-    console.log(fruitFridgeList);
 </script>

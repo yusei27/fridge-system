@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
-    import axios, {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
+    import axios, {AxiosResponse, AxiosError} from "axios";
     const name = ref();
     const email = ref();
     const password = ref();
@@ -75,21 +75,10 @@
           'Password must contain an upper case letter, a numeric character, and a special character',
         passwordConfirm:(v:string)=>(v == password.value) || 'Password must match'
     }
-
-    // function passwordConfirm(v:string){
-    //     console.log("v", v)
-    //     console.log("password", password.value);
-    //     console.log("password_confirm", password_confirm.value);
-    //     return !!(password_confirm.value == password.value) || password.value
-    // }
     
 
     function submit(events:SubmitEvent):void {
-        console.log("submit");
-        console.log("name", name.value)
-        console.log("email", email.value);
-        console.log("password", password.value);
-        console.log("password_confirm", password_confirm.value);
+        console.log("submit", "name", name.value, "email", email.value, "password", password.value, "password_confirm", password_confirm.value);
         const results = events;
         alert(JSON.stringify(results, null, 2));
         type request = {
@@ -98,7 +87,7 @@
                 "password":string,
                 "password_confirm":string
             }
-        }
+        };
         const data_request:request = {'user': {"name":name.value, "email":email.value, "password":password.value, "password_confirm":password_confirm.value}}
         
         axios.post("http://localhost:3333//register/user", JSON.stringify(data_request), {headers:{'Content-Type': 'application/json'}})

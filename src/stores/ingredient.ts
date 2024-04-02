@@ -41,9 +41,8 @@ export const useIngredientStore = defineStore({
                 JSON.stringify(request),
                 {headers:{'Content-Type': 'application/json'}})
                     .then((res: AxiosResponse) => {
-                        console.log("select/data_成功");
+                        console.log("select/data_成功", res.data);
                         this.ingredientList.splice(0)//配列のなかみを空に(再取得時のため)
-                        console.log("res data", res.data)
                         res.data.data.forEach((resData:ingredient) => {
                             const data: ingredient = {
                                 id_ingredient: resData["id_ingredient"],
@@ -53,8 +52,6 @@ export const useIngredientStore = defineStore({
                             };
                             this.ingredientList.push(data);
                         });
-                        console.log("ingredientList store");
-                        console.log(this.ingredientList);
                     })
                     .catch((e: AxiosError<{error: string}>) => {
                         alert("材料テーブル取得失敗");

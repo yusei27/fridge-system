@@ -45,9 +45,8 @@ export const useGenreStore = defineStore({
                 JSON.stringify(request),
                 {headers:{'Content-Type': 'application/json'}})
                     .then((res: AxiosResponse) => {
-                        console.log("select/data_成功");
+                        console.log("select/data_成功", res.data.data);
                         this.genreList.splice(0)//配列のなかみを空に(再取得時のため)
-                        console.log("res data", res.data)
                         res.data.data.forEach((resData:genre) => {
                             const data: genre = {
                                 id_genre: resData["id_genre"],
@@ -56,8 +55,6 @@ export const useGenreStore = defineStore({
                             this.genreListMap.set(String(data["id_genre"]), data);
                             this.genreList.push(data);
                         });
-                        console.log("genreList store");
-                        console.log(this.genreList);
                     })
                     .catch((e: AxiosError<{error: string}>) => {
                         alert("材料テーブル取得失敗");

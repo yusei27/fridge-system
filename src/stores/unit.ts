@@ -29,9 +29,8 @@ export const useUnitStore = defineStore({
         initList(): void {
             axios.post("http://localhost:3334//get/units")
                 .then((res: AxiosResponse) => {
-                    console.log("get_units_api_成功");
+                    console.log("get_units_api_成功", res.data);
                     this.unitList.splice(0)//配列のなかみを空に(再取得時のため)
-                    console.log("res data", res.data)
                     const datas: unit[] = [];
                     res.data.units.forEach((resData:unit) => {
                         const data: unit = {
@@ -41,8 +40,6 @@ export const useUnitStore = defineStore({
                         this.unitListMap.set(String(data["id_unit"]), data);
                         this.unitList.push(data);
                     });
-                    console.log("unitList");
-                    console.log(this.unitList);
                 })
                 .catch((e: AxiosError<{error: string}>) => {
                     alert("単位テーブル取得失敗");

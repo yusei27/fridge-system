@@ -61,12 +61,9 @@
     ];
     const buyedItemListInit: buyedItem[] = reactive([]);
     function buyItem(item: buyedItem):void {
-        console.log("購入済みリスト追加イベント");
-        console.log("完了", item);
-        console.log(shopItemListInit.findIndex(element => element.id === item.id));
+        console.log("購入済みリスト追加イベント", item);
         const idShopItem =  shopItemListInit.findIndex(element => element.id === item.id);
         shopItemListInit.splice(idShopItem, 1);
         buyedItemListInit.push(item);
-        console.log("購入済みリスト", buyedItemListInit)
     }
 </script>

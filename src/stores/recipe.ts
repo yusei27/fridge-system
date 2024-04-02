@@ -81,8 +81,6 @@ export const useRecipeStore = defineStore({
                 {headers:{'Content-Type': 'application/json'}})
                     .then((res: AxiosResponse) => {
                         console.log("select/data_成功");
-0
-                        console.log("res data", res.data)
                         this.recipeList.splice(0)//レシピリストの初期化、再取得用
                         res.data.data.forEach((resData:recipe) => {
                             const data: recipe = {
@@ -95,9 +93,6 @@ export const useRecipeStore = defineStore({
                             this.recipeListMap.set(String(resData["id_recipe"]), data);
                             this.recipeList.push(data);
                         });
-                        console.log("recipeList store");
-                        console.log(this.recipeList);
-                        console.log("sssssssssss")
                         this.isLoading = false;
                     })
                     .catch((e: AxiosError<{error: string}>) => {
@@ -117,64 +112,14 @@ export const useRecipeStore = defineStore({
                 JSON.stringify(request),
                 {headers:{'Content-Type': 'application/json'}})
                 .then((res: AxiosResponse) => {
-                    console.log("非同期レシピ詳細取得成功");
-                    console.log("res data", res.data)
                     const recipe = this.recipeListMap.get(String(id_recipe));
-                    console.log("recipe", recipe)
                     const ingredients = res.data.data
-                    console.log("ingredients", ingredients)
-                    console.log("this.recipeList[id_recipe]", this.recipeListMap);
                     return Promise.resolve(ingredients)
                 })
                 .catch((e: AxiosError<{error: string}>) => {
                     console.log("error", e)
                     return Promise.reject("9999")
                 })
-            
-            // return new Promise(function(resolve){
-            //     console.log("resoleve内");
-            //     resolve("98");
-            // })
-
-            // await axios.post("http://localhost:3334//get/ingredients/from/recipe",
-            //     JSON.stringify(request),
-            //     {headers:{'Content-Type': 'application/json'}})
-            //         .then((res: AxiosResponse) => {
-            //             try {
-            //                 console.log("非同期レシピ詳細取得成功");
-            //                 console.log("res data", res.data)
-            //                 const recipe = this.recipeListMap.get(String(id_recipe));
-            //                 console.log("recipe", recipe)
-            //                 const ingredients = res.data.data
-            //                 console.log("ingredients", ingredients)
-            //                 console.log("this.recipeList[id_recipe]", this.recipeListMap);
-            //                 //this.recipeListMap.get(String(id_recipe)).ingredients = res.data.data;
-            //                 console.log("通貨");
-    
-            //                 return new Promise(function(resolve){
-            //                     console.log("resoleve内");
-            //                     resolve("98");
-                                
-            //                 })
-            //             }
-            //             catch(e){
-            //                 console.log("エラー", e);
-            //                 return new Promise((resolve, reject) => {
-            //                     console.log("resoleve内");
-            //                     reject("98");
-            //                 })
-            //             }
-
-            //         })
-            //         .catch((e: AxiosError<{error: string}>) => {
-            //             alert("レシピテーブル取得失敗2" + e);
-                        
-                          
-            //             return new Promise((resolve, reject) => {
-            //                 reject("10");
-            //             });
-
-            //         })
         }
     }
 })
