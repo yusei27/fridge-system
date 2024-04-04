@@ -1,4 +1,4 @@
-import {defineStore} from "pinia";
+import {defineStore, type StateTree} from "pinia";
 import type {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
 import axios from "axios"
 import { stringify, parse } from 'zipson';
@@ -45,7 +45,6 @@ export const useUnitStore = defineStore({
                         
                     });
                     console.log(this.unitListMap);
-                    console.log(JSON.stringify(this.unitListMap));
                 })
                 .catch((e: AxiosError<{error: string}>) => {
                     alert("単位テーブル取得失敗"  + e);
@@ -55,14 +54,27 @@ export const useUnitStore = defineStore({
         }
     },
     
-    // persist: {
-    //     storage: sessionStorage,
-    //     paths:["unitList"]
-    //     // serializer: {
-    //     //     deserialize: parse,
-    //     //     serialize: stringify
-    //     //   }
-    // }
+    persist: [
+        {
+            storage: sessionStorage,
+            paths:["unitList"],
+        },
+        {
+            storage: sessionStorage,
+            paths:["unitListMap"],
+            serializer: {
+                deserialize: (str):StateTree => {
+                    // parse
+                    return new Map<string, number>(Object.entries(JSON.parse(str)))
+                },
+                serialize: (map_obj):string => {
+                    console.log("serizlize", JSON.stringify(Object.fromEntries(map_obj)))
+                    return JSON.stringify(Object.fromEntries(map_obj))
+                },
+
+            }
+        },
+    ],
 
     
 
