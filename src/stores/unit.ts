@@ -58,18 +58,27 @@ export const useUnitStore = defineStore({
         {
             storage: sessionStorage,
             paths:["unitList"],
+            key:"unitList",
         },
         {
             storage: sessionStorage,
             paths:["unitListMap"],
+            key:"unitListMap",
             serializer: {
                 deserialize: (str):StateTree => {
                     // parse
                     return new Map<string, number>(Object.entries(JSON.parse(str)))
                 },
                 serialize: (map_obj):string => {
-                    console.log("serizlize", JSON.stringify(Object.fromEntries(map_obj)))
-                    return JSON.stringify(Object.fromEntries(map_obj))
+                    try {
+                    console.log("map_obj", map_obj.unitListMap);
+                    console.log("serizlize", JSON.stringify(Object.fromEntries(map_obj.unitListMap)))
+                    return JSON.stringify(Object.fromEntries(map_obj.unitListMap))
+                    }
+                    catch (e){
+                        console.log("serialize失敗", e);
+                        return "失敗"
+                    }
                 },
 
             }
