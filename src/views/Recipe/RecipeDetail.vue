@@ -48,6 +48,7 @@ const {recipedetail} = storeToRefs(recipedetailStore)
 import { useUnitStore, unit } from '@/stores/unit';
 const unitStore = useUnitStore();
 const unitListMap: Map<string, unit> = unitStore.unitListMap;
+console.log("recipedetail unitlistmap", unitListMap);
 
 //ジャンルテーブルのデータストア
 import {useGenreStore, genre} from '@/stores/genre';

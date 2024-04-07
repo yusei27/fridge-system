@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from "vue";
+import {reactive, ref, watch} from "vue";
 //保存ボタンを押下時に起動するメソッド
 import { registerRecipe} from "@/views/Recipe/RecipeRegister_button";
 
@@ -83,6 +83,12 @@ const recipe_unique = {"recipeMethod":recipeMethod, "recipeName":recipeName, "re
 //単位テーブルのデータストア
 import { useUnitStore, unit } from '@/stores/unit';
 const unitStore = useUnitStore();
+console.log("unitStore.$state", unitStore.$state);
+unitStore.initList()
+// if (unitStore.afterinitListFalg === false){
+//     //リロード対策 初期化されていたら、もう一度データベースから単位を取得
+//     unitStore.initList()
+// }
 const unitList: unit[] = unitStore.unitList;
 
 //材料テーブルのデータストア
@@ -113,4 +119,18 @@ function removeIngredient(id: number): void{
     const idRemoveIngredient = recipeIngredientsList.findIndex(element => element.id === id);
     recipeIngredientsList.splice(idRemoveIngredient, 1);
 }
+
+
+// window.onbeforeunload = function () {
+//   console.log("リロード禁止です！");
+//   unitStore.$state.value;
+// };
 </script>
+
+<!-- <script lang="ts">
+// ページ移動前に確認をしたいページでこの関数を呼ぶだけ
+import useConfirmUnload from '@/views/Recipe/use-confirm-unload'
+useConfirmUnload()
+</script> -->
+
+

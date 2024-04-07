@@ -9,6 +9,7 @@ import { stringify, parse } from 'zipson';
 interface State {
     unitListMap: Map<string, unit>;
     unitList: Array<unit>;
+    afterinitListFalg:boolean;//初期値メソっドが起動したか管理するフラグ
 }
 
 export interface unit{
@@ -22,12 +23,17 @@ export const useUnitStore = defineStore({
         return {
             unitListMap: new Map<string, unit>(),
             unitList: new Array<unit>(),
+            afterinitListFalg:false
         }
     },
 
         
     actions: {
         initList(): void {
+            if(this.afterinitListFalg === true){
+                console.log("unitデータ取得済み")
+                return
+            }
             axios.post("http://localhost:3334//get/units")
                 .then((res: AxiosResponse) => {
                     console.log("get_units_api_成功", res.data);
@@ -44,7 +50,8 @@ export const useUnitStore = defineStore({
                         this.unitList.push(data);
                         
                     });
-                    console.log(this.unitListMap);
+                    console.log("unitListmap 初期値",this.unitListMap);
+                    this.afterinitListFalg = true
                 })
                 .catch((e: AxiosError<{error: string}>) => {
                     alert("単位テーブル取得失敗"  + e);
@@ -54,36 +61,42 @@ export const useUnitStore = defineStore({
         }
     },
     
-    persist: [
-        {
-            storage: sessionStorage,
-            paths:["unitList"],
-            key:"unitList",
-        },
-        {
-            storage: sessionStorage,
-            paths:["unitListMap"],
-            key:"unitListMap",
-            serializer: {
-                deserialize: (str):StateTree => {
-                    // parse
-                    return new Map<string, number>(Object.entries(JSON.parse(str)))
-                },
-                serialize: (map_obj):string => {
-                    try {
-                    console.log("map_obj", map_obj.unitListMap);
-                    console.log("serizlize", JSON.stringify(Object.fromEntries(map_obj.unitListMap)))
-                    return JSON.stringify(Object.fromEntries(map_obj.unitListMap))
-                    }
-                    catch (e){
-                        console.log("serialize失敗", e);
-                        return "失敗"
-                    }
-                },
+    // persist: [
+    //     // {
+    //     //     storage: sessionStorage,
+    //     //     paths:["unitList"],
+    //     //     key:"unitList",
+    //     // },
+    //     {
+    //         storage: sessionStorage,
+    //         paths:["unitListMap"],
+    //         key:"unitListMap",
+    //         serializer: {
+    //             deserialize: (str) => {
+    //                 // parse
+    //                 console.log("deserialize str ", str);
+    //                 console.log("deserialize map ", JSON.parse(str));
+    //                 const entries = new Map<string, unit>(Object.entries(JSON.parse(str)));
+    //                 console.log("deserialize entries", entries);
+    //                 //const tmp_map : Map<string, unit> = Object.entries(JSON.parse(str))
+    //                 //console.log("deserialize tmp_map", tmp_map);
+    //                 return new Map<string, unit>(Object.entries(JSON.parse(str)))
+    //             },
+    //             serialize: (map_obj):string => {
+    //                 try {
+    //                 console.log("map_obj", map_obj.unitListMap);
+    //                 console.log("serizlize", JSON.stringify(Object.fromEntries(map_obj.unitListMap)))
+    //                 return JSON.stringify(Object.fromEntries(map_obj.unitListMap))
+    //                 }
+    //                 catch (e){
+    //                     console.log("serialize失敗", e);
+    //                     return "失敗"
+    //                 }
+    //             },
 
-            }
-        },
-    ],
+    //         }
+    //     },
+    // ],
 
     
 
