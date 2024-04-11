@@ -124,6 +124,7 @@ function removeIngredient(id: number): void{
 // window.onbeforeunload = function () {
 //   console.log("リロード禁止です！");
 //   unitStore.$state.value;
+
 // };
 </script>
 
