@@ -1,5 +1,5 @@
 import {defineStore} from "pinia";
-import type {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
+import type {AxiosResponse, AxiosError} from "axios";
 import axios from "axios"
 
 //現状リロードでストアが吹っ飛ぶので、そのうちセッションストレージに保存するようにする

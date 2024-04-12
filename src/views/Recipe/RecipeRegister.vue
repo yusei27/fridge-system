@@ -60,28 +60,29 @@
 
 <script setup lang="ts">
 import {reactive, ref, watch} from "vue";
+import { type Ref } from "vue";
 //保存ボタンを押下時に起動するメソッド
 import { registerRecipe} from "@/views/Recipe/RecipeRegister_button";
 
 
 
-interface ingredient_row{
+export interface ingredient_row{
     id: number
     name: string,
     number: number,
     unit: number,
     genre:number
 }
-const recipeName = ref("");
-var recipeMethod = ref();
-var recipeServingSize = ref();
+const recipeName: Ref<string> = ref("");
+const recipeMethod: Ref<string> = ref("");
+const recipeServingSize:Ref<number> = ref(1);
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
 const numberOfIngredient: number[] = [1, 2, 3, 4, 5, 6, 7];
-const recipe_unique = {"recipeMethod":recipeMethod, "recipeName":recipeName, "recipeServingSize":recipeServingSize}
+const recipe_unique: Map<string, Ref<any>> = {"recipeMethod":recipeMethod, "recipeName":recipeName, "recipeServingSize":recipeServingSize}
 
 //=================pinia読み込み  ここから
 //単位テーブルのデータストア
-import { useUnitStore, unit } from '@/stores/unit';
+import { useUnitStore, type unit } from '@/stores/unit';
 const unitStore = useUnitStore();
 console.log("unitStore.$state", unitStore.$state);
 unitStore.initList()
@@ -92,25 +93,32 @@ unitStore.initList()
 const unitList: unit[] = unitStore.unitList;
 
 //材料テーブルのデータストア
-import { useIngredientStore, ingredient } from '@/stores/ingredient';
+import { useIngredientStore, type ingredient } from '@/stores/ingredient';
 const ingredientStore = useIngredientStore();
 ingredientStore.initList();
 const ingredientsList: ingredient[] = ingredientStore.ingredientList;
 
 //ジャンルテーブルのデータストア
-import {useGenreStore, genre} from '@/stores/genre';
+import {useGenreStore, type genre} from '@/stores/genre';
 const genreStore = useGenreStore();
 genreStore.initList();
 const genreList: genre[] = genreStore.genreList;
 //=================pinia読み込み  ここまで
 
-let counter: number = 0;
 
-const recipeIngredientsList: ingredient_row[] = reactive([{id:counter, name:null, number:null, unit:null, genre:null}]);
+
+//材料行の各種初期値
+const ingredient_init_unit:number = unitList[0].id_unit;//肉
+const ingredient_init_genre:number = genreList[0].id_genre
+
+//画面初期描画時にある材料列
+let counter: number = 0;
+const recipeIngredientsList: ingredient_row[] = reactive([{id:counter, name:"", number:1, unit:ingredient_init_unit, genre:ingredient_init_genre}]);
+
 
 //材料追加ボタン押下時の処理
 function addIngredient(): void{
-    recipeIngredientsList.push({id:counter++, name:null, number:null, unit:null, genre:null});
+    recipeIngredientsList.push({id:counter++, name:"", number:1, unit:ingredient_init_unit, genre:ingredient_init_genre});
 }
 
 

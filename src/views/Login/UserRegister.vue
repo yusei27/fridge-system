@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
-    import axios, {AxiosResponse, AxiosError} from "axios";
+    import axios, {type AxiosResponse, AxiosError} from "axios";
     const name = ref();
     const email = ref();
     const password = ref();

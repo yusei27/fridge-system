@@ -1,5 +1,5 @@
 import {defineStore, type StateTree} from "pinia";
-import type {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
+import type {AxiosResponse, AxiosError} from "axios";
 import axios from "axios"
 import { stringify, parse } from 'zipson';
 

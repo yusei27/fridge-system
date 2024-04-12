@@ -1,8 +1,9 @@
 import type {AxiosResponse, AxiosError} from "axios";
 import axios from "axios";
+import { type ingredient_row } from "./RecipeRegister.vue";
 
 //登録ボタン押下時の処理
- export function registerRecipe(recipeIngredientsList, recipe_unique): void{
+ export function registerRecipe(recipeIngredientsList:ingredient_row[], recipe_unique): void{
     console.log("保存ボタン開始", recipe_unique);
     console.log("レシピ名", recipe_unique.recipeName.value);
     const recipeName = recipe_unique.recipeName;
