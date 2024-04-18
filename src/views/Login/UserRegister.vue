@@ -62,12 +62,12 @@
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { ref, type Ref} from 'vue';
     import axios, {type AxiosResponse, AxiosError} from "axios";
-    const name = ref();
-    const email = ref();
-    const password = ref();
-    const password_confirm= ref();
+    const name = ref("");
+    const email = ref("");
+    const password = ref("");
+    const password_confirm= ref("");
     const rules = {
         email:
             (v:string) => !!(v || '').match(/@/) || 'Please enter a valid email',
@@ -83,6 +83,7 @@
         alert(JSON.stringify(results, null, 2));
         type request = {
             "user": {
+                "name":string
                 "email":string,
                 "password":string,
                 "password_confirm":string

@@ -4,7 +4,6 @@
         <v-data-table
             :headers="headersRecipeListTable"
             :items="recipeList"
-            :key="isLoading"
             
         >
             <template v-slot:item.hensyuu="{ item }">
@@ -33,7 +32,7 @@ type VDataTableHeader = VDataTable["headers"];
 import { useRecipeStore} from '@/stores/recipe';
 const recipeStore = reactive(useRecipeStore());
 recipeStore.initList();
-var {isLoading, recipeList} = storeToRefs(recipeStore);
+const {recipeList} = storeToRefs(recipeStore);
 const headersRecipeListTable: VDataTableHeader = [
     {key: "id_recipe"},
     {key: "name_recipe"},

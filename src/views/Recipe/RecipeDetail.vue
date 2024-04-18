@@ -45,13 +45,14 @@ const recipedetailStore = useRecipeDetailStore();
 const {recipedetail} = storeToRefs(recipedetailStore)
 
 //単位テーブルのデータストア
-import { useUnitStore, unit } from '@/stores/unit';
+import { useUnitStore, type unit } from '@/stores/unit';
 const unitStore = useUnitStore();
 const unitListMap: Map<string, unit> = unitStore.unitListMap;
 console.log("recipedetail unitlistmap", unitListMap);
 
 //ジャンルテーブルのデータストア
-import {useGenreStore, genre} from '@/stores/genre';
+import {useGenreStore, type genre} from '@/stores/genre';
+import type { ingredient } from '@/stores/ingredient';
 const genreStore = useGenreStore();
 genreStore.initList();
 const genreListMap: Map<string, genre> = genreStore.genreListMap;
@@ -61,14 +62,20 @@ var {isLoading, recipeList, recipeListMap} = storeToRefs(recipeStore);
 //レシピの材料を取得
 recipeStore.getIngredientsFromRecipe(id_recipe)
                 .then((ingredients) =>{
+                    if (ingredients === undefined){
+                        console.log("データはundefinedです。");
+                        return
+                    }
                     console.log("then", ingredients);
                     console.log("レシピ詳細に代入")
                     for (const ingredient of ingredients){
-                        if (ingredient != undefined){
-                        //レシピ以外のIDから表示に必要なデータを取得
-                        ingredient.name_unit = unitListMap.get(String(ingredient.fk_id_unit)).name_unit;
-                        ingredient.name_genre = genreListMap.get(String(ingredient.fk_id_genre)).name_genre;
-                        recipedetailStore.recipedetail.ingredients.push(ingredient);
+                        const unit = unitListMap.get(String(ingredient.fk_id_unit))
+                        const genre = genreListMap.get(String(ingredient.fk_id_genre))
+                        if (genre !== undefined && unit !== undefined){
+                            //レシピ以外のIDから表示に必要なデータを取得
+                            ingredient.name_unit = unit.name_unit;
+                            ingredient.name_genre = genre.name_genre;
+                            recipedetailStore.recipedetail.ingredients.push(ingredient);
                         }
                     }
                 })

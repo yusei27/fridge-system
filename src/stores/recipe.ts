@@ -30,10 +30,10 @@ interface ingredient_recipe{
     name_ingredient: string,
     amount: number,
     id_unit: number,
-    fk_id_unit?: number,
+    fk_id_unit: number,
     name_unit: string,
     id_genre: number,
-    fk_id_genre?: number,
+    fk_id_genre: number,
     name_genre: string,
 };
 

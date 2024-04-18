@@ -9,6 +9,7 @@ export default defineConfig({
     vue(),
   ],
   server: {
+    host:true,
     proxy: {
     '/register': {
       target: 'http://localhost:5173/',

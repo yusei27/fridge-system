@@ -75,10 +75,15 @@ export interface ingredient_row{
 }
 const recipeName: Ref<string> = ref("");
 const recipeMethod: Ref<string> = ref("");
-const recipeServingSize:Ref<number> = ref(1);
+const recipeServingSize:Ref<string> = ref("1");
 const numberOfPeopleSelect: string[] = ["1人", "2人", "3人", "4人", "5人", "6人"];
 const numberOfIngredient: number[] = [1, 2, 3, 4, 5, 6, 7];
-const recipe_unique: Map<string, Ref<any>> = {"recipeMethod":recipeMethod, "recipeName":recipeName, "recipeServingSize":recipeServingSize}
+export type recipe_unique =  {
+    recipeMethod: Ref<string>,
+    recipeName: Ref<string>,
+    recipeServingSize:Ref<string>
+}
+const recipe_unique: recipe_unique = {"recipeMethod":recipeMethod, "recipeName":recipeName, "recipeServingSize":recipeServingSize};
 
 //=================pinia読み込み  ここから
 //単位テーブルのデータストア
@@ -100,6 +105,7 @@ const ingredientsList: ingredient[] = ingredientStore.ingredientList;
 
 //ジャンルテーブルのデータストア
 import {useGenreStore, type genre} from '@/stores/genre';
+import type { recipe } from "@/stores/recipe";
 const genreStore = useGenreStore();
 genreStore.initList();
 const genreList: genre[] = genreStore.genreList;
