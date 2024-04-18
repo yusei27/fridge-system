@@ -1,7 +1,8 @@
 #元となるDockerイメージの指定
 FROM node:21
+WORKDIR /app
+COPY ./ /app/
 
-COPY ./ ./
 RUN npm install && \
     npm run build
-CMD ["npm",  "start"]
+CMD ["npm",  "run", "serve"]
