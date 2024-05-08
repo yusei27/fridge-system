@@ -3,6 +3,7 @@ import {computed} from "vue";
 import { RouterLink, RouterView } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue';
 import Login from './views/Login/LoginView.vue';
+import axios, {type AxiosResponse, AxiosError} from "axios";
 
 //ログインしたユーザーのデータストア
 import { useLoginUserStore } from '@/stores/loginuser';
@@ -12,6 +13,16 @@ const loginFlag = computed(
     return loginUserStore.loginFlag;
   }
 );
+
+const session = () => {
+  axios.get("http://localhost:3000/session")
+    .then((res:AxiosResponse) => {
+      console.log("セッション維持中")
+    })
+    .catch((e: AxiosError<{error:string}>) => {
+      console.log("セッション破棄されています")
+    })
+}
 </script>
 
 <template>
@@ -29,6 +40,7 @@ const loginFlag = computed(
         <RouterLink v-bind:to="{name: 'RecipeList'}" tag="v-btn">
           <v-btn class="app-bar-button">レシピ一覧</v-btn>
         </RouterLink>
+        <v-btn class="app-bar-button" v-on:click="session">セッション確認</v-btn>
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn

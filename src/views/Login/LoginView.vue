@@ -22,6 +22,7 @@
 import {ref, type Ref} from "vue";
 import { useLoginUserStore } from '@/stores/loginuser';
 import axios, {type AxiosResponse, AxiosError} from "axios";
+import {instance} from '@/network/axiosutils'
 const LoginUserStore = useLoginUserStore();
 
 //入力フォームの値
@@ -38,7 +39,7 @@ const onLoginButtonClick = () => {
     };
     const data_request:request = {"email":email.value, "password":password.value};
     console.log("ログイン認証情報", data_request);
-    axios.post("http://localhost:3000/login", JSON.stringify(data_request), {headers:{'Content-Type': 'application/json'}})
+    axios.post("http://localhost:3000/login", JSON.stringify(data_request),{headers:{'Content-Type': 'application/json'}})
                 .then((res: AxiosResponse) => {
                     console.log("ユーザー登録API成功");
                     LoginUserStore.loginSuccess();
