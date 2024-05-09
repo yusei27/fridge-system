@@ -6,6 +6,7 @@ import RecipeListView from '../views/Recipe/RecipeList.vue';
 import RecipeRegister from '../views/Recipe/RecipeRegister.vue';
 import RecipeDetail from '../views/Recipe/RecipeDetail.vue';
 import UserRegister from '../views/Login/UserRegister.vue';
+import axios, {type AxiosResponse, AxiosError} from 'axios';
 const routeSetting: RouteRecordRaw[] = [
   {
     path: '/',
@@ -52,6 +53,24 @@ const routeSetting: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: routeSetting,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name === 'Login' || (to.name === 'Log')){
+    console.log('ログイン画面なので、特に何もしない')
+    next();
+    //return
+  }
+  axios.get("https://localhost:3000/session/confirm_login",{withCredentials:true})
+    .then((res: AxiosResponse) => {
+      console.log("セッション維持中、画面遷移");
+      next();
+      //return
+    })
+    .catch((e: AxiosError<{error: string}>) => {
+        console.log("セッションがありません、ログイン画面に遷移");
+        next({ name: 'Login' });
+    })
 });
 
 export default router;

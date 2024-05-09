@@ -15,7 +15,7 @@ const loginFlag = computed(
 );
 
 const session = () => {
-  axios.get("http://localhost:3000/session", {withCredentials:true})
+  axios.get("https://localhost:3000/session", {withCredentials:true})
     .then((res:AxiosResponse) => {
       console.log("セッション維持中")
     })
