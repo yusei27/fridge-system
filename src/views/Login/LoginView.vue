@@ -61,12 +61,12 @@ const onLoginButtonClick = () => {
         headers:{'content-type': 'application/x-www-form-urlencoded'}
     })
                 .then((res: AxiosResponse) => {
-                    console.log("ユーザー登録API成功");
+                    console.log("ログインAPI成功");
                     LoginUserStore.loginSuccess();
                     router.push({name: "Main"})
                 })
                 .catch((e: AxiosError<{error: string}>) => {
-                    console.log("ユーザー登録API失敗");
+                    console.log("ログイン登録API失敗");
                 })
     
 }
