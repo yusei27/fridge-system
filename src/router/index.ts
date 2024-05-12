@@ -56,7 +56,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'Login' || (to.name === 'Log')){
+  console.log(to.name, from.name)
+  if (to.name === 'Login' || to.name === 'UserRegister'){
     console.log('ログイン画面なので、特に何もしない')
     next();
     //return
