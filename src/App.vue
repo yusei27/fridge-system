@@ -68,8 +68,10 @@ const session = () => {
       </template>
     </v-app-bar>
     <!-- ヘッダーここまで-->
-    <v-main>
-      <RouterView ></RouterView>
+    <v-main class="v-main-container">
+      <v-container fluid>
+        <RouterView ></RouterView>
+      </v-container>  
     </v-main>
     <!-- v-fotterにapp propを付与すると画面下部に固定-->
     <v-footer color="primary" app>
@@ -90,5 +92,18 @@ const session = () => {
   background: #eb6100;
   font-weight: 2000;
   margin: 3px;
+}
+
+
+.v-application__wrap {
+    min-height: 100vh;
+    width: 100vw;
+    width: 500px;
+  }
+
+
+.v-main-container {
+  width: 100vw;
+  float: left;
 }
 </style>

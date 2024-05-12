@@ -1,18 +1,28 @@
 <template>
-    <v-container>
+    <v-container fluid class="n1">
         <v-card min-width="300">
-            <v-text-field v-model=email type="email" label="email"></v-text-field>
-            <v-text-field v-model=password type="password" label="password"></v-text-field>       
-            <v-col>
-                <!--<RouterLink v-bind:to="{name: 'Main'}" tag="v-btn">-->
-                    <v-btn v-on:click="onLoginButtonClick">ログイン</v-btn>
-                <!-- </RouterLink> -->
-            </v-col>
-            <v-col>
-                <RouterLink v-bind:to="{name: 'UserRegister'}" tag="v-btn">
-                    <v-btn>新規会員登録</v-btn>
-                </RouterLink>
-            </v-col>
+            <v-row>
+                <v-col cols="12" lg="6" md="12">
+                    <v-text-field v-model=email type="email" label="email"></v-text-field>
+                </v-col>
+                <v-col cols="12" lg="6" md="12">
+                <v-text-field v-model=password type="password" label="password"></v-text-field>       
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <!--<RouterLink v-bind:to="{name: 'Main'}" tag="v-btn">-->
+                        <v-btn v-on:click="onLoginButtonClick">ログイン</v-btn>
+                    <!-- </RouterLink> -->
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col>
+                    <RouterLink v-bind:to="{name: 'UserRegister'}" tag="v-btn">
+                        <v-btn>新規会員登録</v-btn>
+                    </RouterLink>
+                </v-col>
+            </v-row>
         </v-card>
     </v-container>
 </template>
