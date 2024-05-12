@@ -13,8 +13,8 @@ export default defineConfig({
   server: {
     host:true,
     https: {
-      key: fs.readFileSync('./privatekey.pem'),
-      cert: fs.readFileSync('./cert.pem')
+      key: fs.readFileSync('./src/network/privatekey.pem'),
+      cert: fs.readFileSync('./src/network/cert.pem')
     },
     proxy: {
     '/register': {
