@@ -18,9 +18,9 @@ export const axiosClient = axios.create({
     // 必要に応じてconfigを設定
     //baseURL: 'http://localhost:3333',
     headers: {
-      //'Content-Type': 'application/json'
-      'content-type': 'application/x-www-form-urlencoded',
-      'Access-Control-Allow-Origin': 'https://localhost:5173',
+      'Content-Type': 'application/json'
+      //'content-type': 'application/x-www-form-urlencoded',
+      //'Access-Control-Allow-Origin': 'https://localhost:5173',
     },
     withCredentials: true,
 });
