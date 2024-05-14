@@ -1,6 +1,7 @@
 import {defineStore, type StateTree} from "pinia";
 import type {AxiosResponse, AxiosError} from "axios";
 import axios from "axios"
+import { axiosClient } from "@/network/axiosclient";
 import { stringify, parse } from 'zipson';
 
 //現状リロードでストアが吹っ飛ぶので、そのうちセッションストレージに保存するようにする
@@ -34,7 +35,7 @@ export const useUnitStore = defineStore({
                 console.log("unitデータ取得済み")
                 return
             }
-            axios.post("http://localhost:3334//get/units")
+            axiosClient.post("https://localhost:3334//get/units")
                 .then((res: AxiosResponse) => {
                     console.log("get_units_api_成功", res.data);
                     this.unitList.splice(0);//配列のなかみを空に(再取得時のため)
