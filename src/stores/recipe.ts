@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import type {AxiosRequestConfig, AxiosResponse, AxiosError} from "axios";
 import axios from "axios"
+import { axiosClient } from "@/network/axiosclient";
 import type {ingredient} from '@/stores/ingredient'
 
 //現状リロードでストアが吹っ飛ぶので、そのうちセッションストレージに保存するようにする
@@ -76,10 +77,13 @@ export const useRecipeStore = defineStore({
                 "columns":columns
             }
 
-            axios.post("http://localhost:3334//select/data",
-                JSON.stringify(request),
-                {headers:{'Content-Type': 'application/json'}})
+
+            axiosClient.post("https://localhost:3334//select/data",
+                request,
+                //{headers:{'Content-Type': 'application/json'}}
+            )
                     .then((res: AxiosResponse) => {
+                        console.log("axiosclient 200");
                         console.log("select/data_成功");
                         this.recipeList.splice(0)//レシピリストの初期化、再取得用
                         res.data.data.forEach((resData:recipe) => {
@@ -96,6 +100,7 @@ export const useRecipeStore = defineStore({
                         this.isLoading = false;
                     })
                     .catch((e: AxiosError<{error: string}>) => {
+                        console.log("axiosclient error");
                         alert("レシピテーブル取得失敗3" + e);
                         return 
                     })
