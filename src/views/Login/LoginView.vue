@@ -35,6 +35,10 @@ import axios, {type AxiosResponse, AxiosError} from "axios";
 import { useRouter } from "vue-router";
 const LoginUserStore = useLoginUserStore();
 
+//通知のストア
+import { usenotificationStore, type notification_type} from "@/stores/notification";
+const notificationStore = usenotificationStore();
+
 //入力フォームの値
 const email = ref("");
 const password = ref("");
@@ -63,9 +67,12 @@ const onLoginButtonClick = () => {
                     console.log("ログインAPI成功");
                     LoginUserStore.loginSuccess();
                     router.push({name: "Main"})
+                    notificationStore.pushnotificationList("success", "ログインに成功しました。")
                 })
                 .catch((e: AxiosError<{error: string}>) => {
                     console.log("ログイン登録API失敗");
+                    notificationStore.pushnotificationList("error", "ログインに失敗しました。")
+
                 })
     
 }
