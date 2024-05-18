@@ -5,6 +5,8 @@ import HelloWorld from './components/HelloWorld.vue';
 import Login from './views/Login/LoginView.vue';
 import axios, {type AxiosResponse, AxiosError} from "axios";
 
+import {storeToRefs} from 'pinia'
+
 //ログインしたユーザーのデータストア
 import { useLoginUserStore } from '@/stores/loginuser';
 const loginUserStore = useLoginUserStore();
@@ -14,6 +16,13 @@ const loginFlag = computed(
   }
 );
 
+//アラートのデータストア
+import { usenotificationStore, type notification_type} from "./stores/notification";
+const notificationStore = usenotificationStore();
+const { notificationList } = storeToRefs(notificationStore)
+
+//開発用
+//セッションの確認
 const session = () => {
   axios.get("https://localhost:3000/session", {withCredentials:true})
     .then((res:AxiosResponse) => {
@@ -22,6 +31,19 @@ const session = () => {
     .catch((e: AxiosError<{error:string}>) => {
       console.log("セッション破棄されています")
     })
+}
+
+var num:number = 0
+const addNotification = () => {
+  num += 1;
+  const message:string = "テスト" + num.toString();
+  var kind:notification_type
+  if (num % 2 === 0){
+    kind = "error"
+  } else{
+    kind = "success"
+  }
+  notificationStore.pushnotificationList(kind, message)
 }
 </script>
 
@@ -41,6 +63,8 @@ const session = () => {
           <v-btn class="app-bar-button">レシピ一覧</v-btn>
         </RouterLink>
         <v-btn class="app-bar-button" v-on:click="session">セッション確認</v-btn>
+        <v-btn class="app-bar-button" v-on:click="addNotification">アラートテスト</v-btn>
+
         <v-menu>
           <template v-slot:activator="{ props }">
             <v-btn
@@ -68,8 +92,21 @@ const session = () => {
       </template>
     </v-app-bar>
     <!-- ヘッダーここまで-->
+
     <v-main class="v-main-container">
       <v-container fluid>
+        <div class="notificationContainer">
+        <v-slide-y-transition group>
+            <v-alert
+            v-for="notification in notificationList"
+            theme="dark"
+            :type="notification.type"
+            dismissible
+            >{{ notification.message }}</v-alert>
+        </v-slide-y-transition>
+        </div>
+       
+          <!--<v-btn @click="removeNotification">New notification</v-btn>-->
         <RouterView ></RouterView>
       </v-container>  
     </v-main>
