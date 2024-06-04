@@ -78,7 +78,7 @@ export const useRecipeStore = defineStore({
             }
 
 
-            axiosClient.post("https://localhost:3334//select/data",
+            axiosClient.post("http://localhost/get_data/select/data",
                 request,
                 //{headers:{'Content-Type': 'application/json'}}
             )
@@ -113,7 +113,7 @@ export const useRecipeStore = defineStore({
             const columns: string[] = ["id_ingredient", "name_ingredient", "fk_id_unit", "fk_id_genre"];
             const request:request_2 = {"id_recipe":id_recipe}
 
-            return  await axios.post("http://localhost:3334//get/ingredients/from/recipe",
+            return  await axios.post("http://localhost/get_data/get/ingredients/from/recipe",
                 JSON.stringify(request),
                 {headers:{'Content-Type': 'application/json'}})
                 .then((res: AxiosResponse) => {

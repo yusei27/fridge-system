@@ -37,7 +37,7 @@ export const useIngredientStore = defineStore({
                 "columns":columns
             }
 
-            axios.post("http://localhost:3334//select/data",
+            axios.post("http://localhost/get_data/select/data",
                 JSON.stringify(request),
                 {headers:{'Content-Type': 'application/json'}})
                     .then((res: AxiosResponse) => {

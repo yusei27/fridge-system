@@ -11,10 +11,17 @@ export default defineConfig({
     //basicSsl()
   ],
   server: {
-    host:true,
+    host:true,//'0.0.0.0'
+    // //host:'0.0.0.0',
     https: {
       key: fs.readFileSync('./src/network/privatekey.pem'),
       cert: fs.readFileSync('./src/network/cert.pem')
+    },
+    //websocket client error ws/localhost 
+    hmr: {
+      clientPort: 80,
+    //   port: 2345,
+      protocol: 'ws'
     },
     proxy: {
     '/register': {

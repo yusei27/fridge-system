@@ -61,7 +61,7 @@ import {type recipe_unique} from "./RecipeRegister.vue";
             "ingredient_not_exist":ingredientsNotExistList//まだ材料が材料テーブルに登録されていないリスト
         }
 
-    axios.post("http://localhost:3334//register/recipe",
+    axios.post("http://localhost/get_data/register/recipe",
             JSON.stringify(request),
             {headers:{'Content-Type': 'application/json'}})
                 .then((res: AxiosResponse) => {

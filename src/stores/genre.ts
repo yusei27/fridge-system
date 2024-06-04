@@ -42,7 +42,7 @@ export const useGenreStore = defineStore({
                 "columns":columns
             }
 
-            axiosClient.post("https://localhost:3334//select/data",
+            axiosClient.post("http://localhost/get_data/select/data",
                 JSON.stringify(request),
                 //{headers:{'Content-Type': 'application/json'}}
             )

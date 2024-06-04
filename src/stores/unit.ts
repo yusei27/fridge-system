@@ -35,7 +35,7 @@ export const useUnitStore = defineStore({
                 console.log("unitデータ取得済み")
                 return
             }
-            axiosClient.post("https://localhost:3334//get/units")
+            axiosClient.post("http://localhost/get_data/get/units")
                 .then((res: AxiosResponse) => {
                     console.log("get_units_api_成功", res.data);
                     this.unitList.splice(0);//配列のなかみを空に(再取得時のため)
