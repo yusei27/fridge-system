@@ -18,11 +18,11 @@ export default defineConfig({
     //   cert: fs.readFileSync('./src/network/cert.pem')
     // },
     //websocket client error ws/localhost 
-    hmr: {
-      clientPort: 80,
-      //port: 80,
-      protocol: 'ws'
-    },
+    // hmr: {
+    //   clientPort: 80,
+    //   port: 51,
+    //   protocol: 'ws'
+    // },
     proxy: {
     '/register': {
       target: 'http://localhost:5173/',
