@@ -24,7 +24,7 @@ const { notificationList } = storeToRefs(notificationStore)
 //開発用
 //セッションの確認
 const session = () => {
-  axios.get("https://localhost:3000/session", {withCredentials:true})
+  axios.get("http://localhost/loginapi/session", {withCredentials:true})
     .then((res:AxiosResponse) => {
       console.log("セッション維持中")
     })

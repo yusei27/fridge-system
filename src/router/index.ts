@@ -62,7 +62,7 @@ router.beforeEach((to, from, next) => {
     next();
     //return
   }
-  axios.get("https://localhost:3000/session/confirm_login",{withCredentials:true})
+  axios.get("http://localhost/loginapi/session/confirm_login",{withCredentials:true})
     .then((res: AxiosResponse) => {
       console.log("セッション維持中、画面遷移");
       next();

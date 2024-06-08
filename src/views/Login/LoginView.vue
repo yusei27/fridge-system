@@ -55,9 +55,9 @@ const onLoginButtonClick = () => {
     };
     const data_request:request = {"email":email.value, "password":password.value};
     console.log("ログイン認証情報", data_request);
-    //axios.post("http://localhost:3000/login", JSON.stringify(data_request),{headers:{'Content-Type': 'application/json'}})
-    //axios.post("https://localhost:3000/login", {withCredentials:true})
-    axios("https://localhost:3000/login",{
+    //axios.post("http://localhost/loginapi/login", JSON.stringify(data_request),{headers:{'Content-Type': 'application/json'}})
+    //axios.post("http://localhost/loginapi/login", {withCredentials:true})
+    axios("http://localhost/loginapi/login",{
         method: "post",
         data:data_request,
         withCredentials: true,
