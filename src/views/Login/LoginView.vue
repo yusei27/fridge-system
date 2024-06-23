@@ -32,6 +32,7 @@
 import {ref, type Ref} from "vue";
 import { useLoginUserStore } from '@/stores/loginuser';
 import axios, {type AxiosResponse, AxiosError} from "axios";
+import { axiosClient } from "@/network/axiosclient";
 import { useRouter } from "vue-router";
 const LoginUserStore = useLoginUserStore();
 
@@ -59,7 +60,9 @@ const onLoginButtonClick = () => {
     //axios.post("http://localhost/loginapi/login", {withCredentials:true})
     const URL_FRIDGE_LOGIN:string = import.meta.env.VITE_URL_FRIDGE_LOGIN;
     console.log("ログインAPIのURL", URL_FRIDGE_LOGIN);
-    axios(URL_FRIDGE_LOGIN,{
+    //axios("/loginapi/login",{
+    axiosClient(URL_FRIDGE_LOGIN,{
+    
         method: "post",
         data:data_request,
         withCredentials: true,

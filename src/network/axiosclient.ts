@@ -14,9 +14,12 @@ import axios from 'axios';
 //https://timmousk.com/blog/axios-timeout/
 axios.defaults.timeout = 5000;
 
+//URLの共通部分　ここではローカルの場合はnginxや本番の場合はawsのALB
+const VITE_URL_LOAD_BALANCE:string = import.meta.env.VITE_URL_LOAD_BALANCE;
+
 export const axiosClient = axios.create({
     // 必要に応じてconfigを設定
-    //baseURL: 'http://localhost:3333',
+    baseURL: VITE_URL_LOAD_BALANCE,
     headers: {
       'Content-Type': 'application/json'
       //'content-type': 'application/x-www-form-urlencoded',

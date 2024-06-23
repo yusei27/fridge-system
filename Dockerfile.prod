@@ -7,7 +7,7 @@ RUN npm install && \
     npm run build
 
 #RUN  cp -r /app/dist /app/fridge-nginx/fridge-system-prod
-
+#ホストとのバインドマウントはCMD実行の直前に行われるらしいので、cmdでファイルをホストに転送
 CMD ["cp", "-r", "/app/dist", "/app/fridge-nginx/fridge-system-prod"]
 #CMD ["npm",  "run"]
 #CMD [ "node", "dist/index.html" ]

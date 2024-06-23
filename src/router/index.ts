@@ -55,23 +55,24 @@ const router = createRouter({
   routes: routeSetting,
 });
 
-router.beforeEach((to, from, next) => {
-  console.log(to.name, from.name)
-  if (to.name === 'Login' || to.name === 'UserRegister'){
-    console.log('ログイン画面なので、特に何もしない')
-    next();
-    //return
-  }
-  axios.get("http://localhost/loginapi/session/confirm_login",{withCredentials:true})
-    .then((res: AxiosResponse) => {
-      console.log("セッション維持中、画面遷移");
-      next();
-      //return
-    })
-    .catch((e: AxiosError<{error: string}>) => {
-        console.log("セッションがありません、ログイン画面に遷移");
-        next({ name: 'Login' });
-    })
-});
+//ALBの証明書が発行できないので、中止中
+// router.beforeEach((to, from, next) => {
+//   console.log(to.name, from.name)
+//   if (to.name === 'Login' || to.name === 'UserRegister'){
+//     console.log('ログイン画面なので、特に何もしない')
+//     next();
+//     //return
+//   }
+//   axios.get("http://localhost/loginapi/session/confirm_login",{withCredentials:true})
+//     .then((res: AxiosResponse) => {
+//       console.log("セッション維持中、画面遷移");
+//       next();
+//       //return
+//     })
+//     .catch((e: AxiosError<{error: string}>) => {
+//         console.log("セッションがありません、ログイン画面に遷移");
+//         next({ name: 'Login' });
+//     })
+// });
 
 export default router;
