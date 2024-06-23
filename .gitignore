@@ -29,3 +29,8 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+
+
+#envはgitに上げない
+.env*

@@ -28,6 +28,8 @@ const vuetify = createVuetify({
         },
     },
 });
+console.log("モード",import.meta.env.MODE);
+console.log("環境変数",import.meta.env);
 
 const app = createApp(App)
 const pinia = createPinia()

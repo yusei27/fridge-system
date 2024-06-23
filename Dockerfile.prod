@@ -1,0 +1,13 @@
+#元となるDockerイメージの指定
+FROM node:21
+WORKDIR /app
+COPY ./ /app/
+
+RUN npm install && \
+    npm run build
+
+#RUN  cp -r /app/dist /app/fridge-nginx/fridge-system-prod
+
+CMD ["cp", "-r", "/app/dist", "/app/fridge-nginx/fridge-system-prod"]
+#CMD ["npm",  "run"]
+#CMD [ "node", "dist/index.html" ]

@@ -57,7 +57,9 @@ const onLoginButtonClick = () => {
     console.log("ログイン認証情報", data_request);
     //axios.post("http://localhost/loginapi/login", JSON.stringify(data_request),{headers:{'Content-Type': 'application/json'}})
     //axios.post("http://localhost/loginapi/login", {withCredentials:true})
-    axios("http://localhost/loginapi/login",{
+    const URL_FRIDGE_LOGIN:string = import.meta.env.VITE_URL_FRIDGE_LOGIN;
+    console.log("ログインAPIのURL", URL_FRIDGE_LOGIN);
+    axios(URL_FRIDGE_LOGIN,{
         method: "post",
         data:data_request,
         withCredentials: true,

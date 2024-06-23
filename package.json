@@ -7,7 +7,7 @@
     "dev": "vite",
     "serve": "vite --host",
     "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
+    "preview": "vite preview --port 5173",
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force"
